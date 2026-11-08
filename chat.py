@@ -14,7 +14,7 @@ from urllib.parse import quote, urlsplit, urlunsplit
 import requests
 from azure.identity import AzureCliCredential
 
-AGENT_NAME = "csv-chart-analyst"
+AGENT_NAME = os.environ.get("AGENT_NAME", "finops-analyst")
 MODEL_NAME = "gpt-5.4-mini"
 
 
@@ -122,12 +122,12 @@ class FoundryClient:
         )
         result = response.json()
         response_id = result["id"]
-        deadline = time.monotonic() + 900
+        deadline = time.monotonic() + int(os.environ.get("RESPONSE_TIMEOUT_SECONDS", "900"))
 
         while result.get("status") in {"queued", "in_progress"}:
             if time.monotonic() >= deadline:
                 raise TimeoutError(
-                    f"Response {response_id} is still {result.get('status')} after 15 minutes"
+                    f"Response {response_id} is still {result.get('status')} after the timeout"
                 )
             time.sleep(3)
             result = self.request(

@@ -4,7 +4,7 @@ set -eu
 
 project_endpoint="$(azd env get-value FOUNDRY_PROJECT_ENDPOINT)"
 project_id="$(azd env get-value AZURE_AI_PROJECT_ID)"
-agent_name="$(azd env get-value AGENT_CSV_CHART_ANALYST_NAME)"
+agent_name="$(azd env get-value AGENT_FINOPS_ANALYST_NAME)"
 
 agent_principal_id="$(az rest \
   --method GET \

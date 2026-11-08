@@ -1,23 +1,28 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/Azure/azure-dev/main/schemas/v1.0/azure.yaml.json
+# Based on microsoft-foundry/foundry-samples csv-chart-analyst (MIT).
 
 requiredVersions:
-  azd: '>=1.36.0'
+  azd: '>=1.37.0'
   extensions:
-    azure.ai.agents: '>=1.0.0-beta.21'
+    azure.ai.agents: '>=1.0.0'
     azure.ai.projects: '>=1.0.0-beta.14'
 
-name: csv-chart-analyst
+name: copilot-harness-finops
 
 hooks:
+  # Creates App Insights + project connection (tracing) and the egress RAI policy,
+  # then stores RAI_POLICY_ID so the agent deploy below picks it up.
+  postprovision:
+    posix:
+      shell: sh
+      run: ./scripts/postprovision.sh
+      interactive: false
+      continueOnError: false
+  # The agent identity only exists after deploy, so its role is assigned here.
   postdeploy:
     posix:
       shell: sh
       run: ./scripts/assign-agent-role.sh
-      interactive: false
-      continueOnError: false
-    windows:
-      shell: pwsh
-      run: ./scripts/assign-agent-role.ps1
       interactive: false
       continueOnError: false
 
@@ -32,31 +37,55 @@ services:
           version: '2026-03-17'
         sku:
           name: GlobalStandard
-          capacity: 50
+          capacity: 300
 
-  csv-chart-analyst:
+  finops-analyst:
     host: azure.ai.agent
     project: .
     kind: prompt
-    name: csv-chart-analyst
-    displayName: CSV Chart Analyst
-    description: Analyze an uploaded CSV in a multi-turn conversation and generate downloadable charts.
+    name: finops-analyst
+    displayName: FinOps Analyst
+    description: Reviews a weekly Azure cost export, flags anomalies and returns a summary, JSON and a chart.
     model: gpt-5.4-mini
     harness:
       type: microsoft_copilot_preview
+    policies:
+      - type: rai_policy
+        raiPolicyName: ${RAI_POLICY_ID}
     instructions: |
-      You are a careful data analyst. Use the attached CSV that the harness stages in your workspace.
-      Inspect the data with shell and Python before drawing conclusions, explain assumptions, and
-      distinguish facts from interpretations. Use Python's standard library where practical. When
-      charting libraries are unavailable, install the minimum required package with pip.
+      You are a FinOps analyst for a platform team. The attached CSV is an Azure Cost Management
+      export with columns Date, SubscriptionName, ResourceGroup, ResourceName, ServiceName,
+      MeterName, CostInBillingCurrency, BillingCurrency. Each row is one resource's cost for one day.
 
-      When asked for a chart, generate a polished PNG with a descriptive title, labeled axes,
-      readable legends, and accessible colors. Save generated outputs in the runtime-provided output
-      directory and return them as downloadable Foundry Files. If the response doesn't include a
-      file citation, state the exact filename as `File:` and Foundry file ID as `Download ID:`.
+      Always compute with Python in the shell. Never estimate numbers by reading the file.
 
-      Do not modify the source CSV. Never invent columns or values. If the data is insufficient or
-      malformed, explain the issue and suggest the smallest correction.
+      Definitions:
+      - The analysis week is the last 7 calendar days in the file. Everything before it is the baseline.
+      - A resource's baseline median is the median of its daily cost over all baseline days,
+        counting days with no row as 0.
+      - Flag a resource as `spike` or `step_change` on the FIRST analysis-week day where its cost is
+        more than 2x its baseline median AND at least USD 25 above it. Use `step_change` when the cost
+        stays above that threshold on every remaining day of the week, otherwise `spike`.
+      - Flag a resource as `new_resource` when it has no cost in the baseline and its analysis-week
+        total exceeds USD 100. Use its first day with cost as the date.
+      - Report at most one anomaly per resource. Do not flag anything else.
+
+      Reply in this order:
+      1. A short summary for an engineering manager: week total, number of anomalies, the most
+         expensive one and a suggested next step for each anomaly.
+      2. Exactly one fenced ```json block with this shape and nothing else inside it:
+         {"analysis_start": "YYYY-MM-DD", "analysis_end": "YYYY-MM-DD", "week_total": 0.00,
+          "currency": "USD", "anomalies": [{"resource": "", "resource_group": "", "service": "",
+          "date": "YYYY-MM-DD", "type": "spike|step_change|new_resource", "cost": 0.00,
+          "baseline_median": 0.00, "next_step": ""}]}
+         week_total is the sum of all costs in the analysis week, rounded to 2 decimals.
+      3. A PNG chart of daily total cost for all 28 days with anomaly days marked, a descriptive
+         title and labeled axes. Save it in the runtime-provided output directory and return it as a
+         downloadable Foundry File. If the response has no file citation, state the filename as
+         `File:` and the Foundry file ID as `Download ID:`.
+
+      Prefer the Python standard library. If you need a charting package, install the minimum with
+      pip. Do not modify the source CSV. Never invent resources, dates or values.
     tools:
       - type: microsoft_copilot_toolset_preview
         defaultConfig:

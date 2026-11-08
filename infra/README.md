@@ -1,4 +1,5 @@
-# Foundry infrastructure
+# Infrastructure
 
-The `microsoft.foundry` provider synthesizes and provisions the Foundry project and model for this
-sample. No Bicep template is required.
+The `microsoft.foundry` azd provider generates and deploys the Foundry account, project and model deployment from `azure.yaml`. No Bicep is needed here.
+
+Everything the provider does not cover is in `scripts/postprovision.sh` (App Insights connection, egress RAI policy) and `scripts/assign-agent-role.sh` (agent identity role).

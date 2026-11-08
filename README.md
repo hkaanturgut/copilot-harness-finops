@@ -1,125 +1,84 @@
-# CSV Chart Analyst
+# Governed FinOps analyst on the Microsoft Copilot harness
 
-A Microsoft Copilot harness Prompt Agent sample for a complete native file workflow: upload a CSV,
-attach it to a request, analyze it in the harness workspace, generate a PNG, upload the output to
-Foundry Files, and download it through the client.
+A prompt agent on the **Microsoft Copilot harness** in Foundry Agent Service (public preview, Oct 2026) that reviews a weekly Azure cost export, flags anomalies, and returns a manager summary, a JSON block and a PNG chart.
 
-One `azd up` creates:
+The point isn't the agent. It's what an enterprise platform team would ask for before letting an agent with a **shell** near their data:
 
-- a Microsoft Foundry project and `gpt-5.4-mini` deployment;
-- one Prompt Agent using `harness.type: microsoft_copilot_preview`;
-- native file-read, file-write, and shell capabilities with all other harness built-ins disabled;
-  and
-- a post-deploy role assignment granting the Agent identity **Foundry User** at project scope.
+| Concern | What this repo does |
+|---|---|
+| Infrastructure as code | One `azd up`. The `microsoft.foundry` provider creates the project and model; hooks cover the rest. |
+| Least-privilege tools | Only `filesystem_read`, `filesystem_write` and `shell`. Web and subagents are off. |
+| Network egress | RAI policy, **default Deny**, Enforced. Allow-list: PyPI and this project's App Insights. Everything else gets HTTP 403. |
+| Identity | Entra only. The agent's own identity gets **Foundry User** after deploy (it doesn't exist before). CI uses OIDC with Foundry User only: it can run evals, not deploy. |
+| Observability | App Insights connected to the project: server-side traces, including one span per egress decision. |
+| Quality gate | 15 synthetic cost exports with seeded anomalies. CI fails on recall < 0.90, precision < 0.80, week total off by > 1%, no chart, or egress not blocked. |
+| Cost | Budget alert on the resource group. Harness runtime is free until 2026-12-01, then USD 0.0994/vCPU-hour + 0.0118/GiB-hour plus model tokens. |
 
-## Prerequisites
+## Architecture
 
-- Azure Developer CLI (`azd`) 1.36.0 or later with the Microsoft Foundry extension pack. The sample
-  pins `azure.ai.agents` 1.0.0-beta.21 and `azure.ai.projects` 1.0.0-beta.14.
-- Azure CLI authenticated to the target tenant.
-- Python 3.9 or later.
-- Permission to create Foundry resources, deploy Agent versions, and assign **Foundry User** at
-  project scope.
+```mermaid
+flowchart LR
+  user[Engineer / CI] -->|Entra token| ep[Agent endpoint<br/>finops-analyst]
+  subgraph Foundry project
+    ep --> harness[Copilot harness<br/>agent loop + sandbox]
+    harness -->|tokens| model[gpt-5.4-mini]
+    harness -->|read/write/shell| sandbox[(Sandbox workspace<br/>CSV in, PNG out)]
+    harness --> files[Foundry Files]
+  end
+  sandbox -->|egress policy: Deny by default| internet((Internet))
+  sandbox -->|allowed| pypi[pypi.org]
+  harness -. traces .-> appi[App Insights]
+```
 
-## Deploy
+## Run it
 
-From this folder:
+Prereqs: `azd` 1.37+, the `microsoft.foundry` azd extension, Azure CLI, Python 3.9+, a subscription in a [supported region](https://learn.microsoft.com/azure/foundry/agents/concepts/limits-quotas-regions#microsoft-copilot-harness-preview).
 
 ```bash
+azd extension install microsoft.foundry
+export AZD_ALPHA_ENABLE_AGENTS_MANAGED_HARNESS=true   # every shell, during the preview
 azd auth login
-azd env new csv-chart-analyst-dev \
-  --subscription <subscription-id> \
-  --location canadacentral
-azd up --no-prompt
+azd env new finops-demo --location canadacentral
+azd up
+
+python3 -m venv .venv && . .venv/bin/activate && pip install -r requirements.txt
+python chat.py sample-data/cost-export-2026-11-01.csv --prompt "Review this week's cost export."
 ```
 
-Canada Central is the sample default. Replace `canadacentral` with another supported Foundry region
-when needed.
-
-The `postdeploy` hook retrieves the created Agent's `instance_identity.principal_id` and assigns
-**Foundry User** on the Foundry project. It doesn't assign the role to the project managed identity.
-The role can take several minutes to propagate; retry from a new conversation if output upload
-initially returns HTTP 403.
-
-## Run the complete workflow
-
-Create a virtual environment and install the client dependencies:
+Try the egress policy:
 
 ```bash
-python3 -m venv .venv
-source .venv/bin/activate
-python -m pip install -r requirements.txt
+python chat.py sample-data/cost-export-2026-11-01.csv --prompt \
+  'Use shell to run: curl -s -o /dev/null -w "%{http_code}" https://example.com'
+# -> 403
 ```
 
-Start an interactive conversation:
+Run the eval gate:
 
 ```bash
-python chat.py sample-data/regional-sales.csv
+python evals/generate_data.py   # optional: regenerate the 15 cases + sample
+python evals/run_evals.py       # writes evals/results/latest.md
 ```
 
-Try:
+CI setup (one time, needs rights to create an app registration): `./scripts/setup-github-oidc.sh`.
 
-```text
-Summarize the data and identify the strongest region.
-How did monthly revenue change from January through June?
-Create a grouped bar chart of revenue by month and region. Return it as a PNG file.
-```
+Tear down: `azd down --purge --force`.
 
-Generated files are downloaded to `outputs/`.
+## Detection rule
 
-For a repeatable non-interactive test:
+Deterministic on purpose, so the evals have a ground truth. Over 28 days of daily cost per resource, the last 7 days are the analysis week:
 
-```bash
-python chat.py sample-data/regional-sales.csv \
-  --prompt "Analyze the CSV, identify the region with the highest total revenue, and create a grouped bar chart of monthly revenue by region as a downloadable PNG."
-```
+- `spike` / `step_change`: first day > 2x the resource's baseline median **and** ≥ USD 25 above it (`step_change` if it stays there).
+- `new_resource`: no baseline cost and > USD 100 in the analysis week.
 
-The client uploads the CSV to the project Files API and includes its file ID as an `input_file` in
-the Responses request. The harness stages the attachment before the model starts. The Agent uses
-shell and Python to inspect the CSV. If the plotting library is missing, it installs the minimum
-package with pip, writes the PNG to the runtime-provided output directory, and uploads it to Foundry
-Files.
+## Results
 
-The client prefers a project `file_citation` annotation. It also supports builds that return the
-uploaded filename and Foundry file ID as `File` and `Download ID` text. It downloads either form
-through the project Files API, not the Code Interpreter Containers API.
+RESULTS_PLACEHOLDER
 
-## Data and security behavior
+## Things I learned (preview, Nov 2026)
 
-- The CSV is uploaded with purpose `assistants` to the project-scoped Files API.
-- The CSV is attached to each turn in the same conversation. The runtime deduplicates the staged
-  file and keeps it available for follow-up analysis.
-- Native web and subagent tools are disabled. Shell is enabled, so disabling the separate filesystem
-  controls isn't a strict security boundary.
-- The output upload runs as the Agent identity and requires **Foundry User** at project scope.
-- Uploaded input and generated output files are not deleted automatically. Clean them up according
-  to your data-retention requirements.
-- The sample doesn't configure or invoke Code Interpreter.
+LEARNINGS_PLACEHOLDER
 
-## Supported surfaces
+## Credits
 
-| Step | Included client |
-| --- | --- |
-| Upload CSV to Foundry Files | Yes |
-| Stage `input_file` in the harness workspace | Yes |
-| Analyze across turns | Yes |
-| Install a missing plotting package | Yes |
-| Generate and upload PNG | Yes |
-| Download PNG from Foundry Files | Yes |
-
-Portal attachment filtering and generated-file UI behavior can differ by rollout. This sample uses
-the included client and does not require the Portal file UI.
-
-The client sends `Foundry-Features: MicrosoftCopilot=V1Preview` for the Copilot harness
-preview endpoint. Review the preview API contract before adapting this client for production.
-
-## Tear down
-
-Delete the complete isolated environment after testing:
-
-```bash
-azd down --purge --force --no-prompt
-```
-
-The client doesn't delete individual input or output files. Purging the isolated project removes its
-Foundry Files; delete local files under `outputs/` separately when they are no longer needed.
+Started from Microsoft's [`csv-chart-analyst`](https://github.com/microsoft-foundry/foundry-samples/tree/main/samples/cli/prompt-agents/microsoft-copilot-harness/csv-chart-analyst) sample (MIT). Docs: [Copilot harness how-to](https://learn.microsoft.com/azure/foundry/agents/how-to/use-tools-skills-copilot-harness), [announcement](https://devblogs.microsoft.com/foundry/microsoft-copilot-harness-in-foundry/).

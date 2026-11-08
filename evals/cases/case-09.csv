@@ -1,0 +1,337 @@
+Date,SubscriptionName,ResourceGroup,ResourceName,ServiceName,MeterName,CostInBillingCurrency,BillingCurrency
+2026-10-05,sub-contoso-prod,rg-ai-dev,aoai-dev,Foundry Models,gpt-5.4-mini Input Tokens,17.08,USD
+2026-10-05,sub-contoso-prod,rg-ai-dev,srch-dev,Azure AI Search,Standard S1 Unit,7.56,USD
+2026-10-05,sub-contoso-prod,rg-data-prod,adf-ingest-prod,Azure Data Factory v2,Orchestration Activity Run,33.43,USD
+2026-10-05,sub-contoso-prod,rg-data-prod,dbw-analytics-prod,Azure Databricks,Premium All-purpose Compute DBU,131.75,USD
+2026-10-05,sub-contoso-prod,rg-data-prod,st-lake-prod,Storage,Hot LRS Data Stored,43.06,USD
+2026-10-05,sub-contoso-prod,rg-platform,aks-platform,Azure Kubernetes Service,Standard Uptime SLA,74.03,USD
+2026-10-05,sub-contoso-prod,rg-platform,kv-platform,Key Vault,Operations,3.25,USD
+2026-10-05,sub-contoso-prod,rg-platform,log-platform,Log Analytics,Analytics Logs Data Ingestion,38.49,USD
+2026-10-05,sub-contoso-prod,rg-platform,vmss-aks-nodes,Virtual Machines,D4s v5,139.67,USD
+2026-10-05,sub-contoso-prod,rg-web-prod,app-web-prod,Azure App Service,P1v3 App Service Hours,56.05,USD
+2026-10-05,sub-contoso-prod,rg-web-prod,fd-web-prod,Azure Front Door,Data Transfer Out,20.18,USD
+2026-10-05,sub-contoso-prod,rg-web-prod,sql-web-prod,SQL Database,vCore,86.77,USD
+2026-10-06,sub-contoso-prod,rg-ai-dev,aoai-dev,Foundry Models,gpt-5.4-mini Input Tokens,15.49,USD
+2026-10-06,sub-contoso-prod,rg-ai-dev,srch-dev,Azure AI Search,Standard S1 Unit,9.04,USD
+2026-10-06,sub-contoso-prod,rg-data-prod,adf-ingest-prod,Azure Data Factory v2,Orchestration Activity Run,33.94,USD
+2026-10-06,sub-contoso-prod,rg-data-prod,dbw-analytics-prod,Azure Databricks,Premium All-purpose Compute DBU,133.90,USD
+2026-10-06,sub-contoso-prod,rg-data-prod,st-lake-prod,Storage,Hot LRS Data Stored,43.22,USD
+2026-10-06,sub-contoso-prod,rg-platform,aks-platform,Azure Kubernetes Service,Standard Uptime SLA,72.49,USD
+2026-10-06,sub-contoso-prod,rg-platform,kv-platform,Key Vault,Operations,3.78,USD
+2026-10-06,sub-contoso-prod,rg-platform,log-platform,Log Analytics,Analytics Logs Data Ingestion,44.00,USD
+2026-10-06,sub-contoso-prod,rg-platform,vmss-aks-nodes,Virtual Machines,D4s v5,171.47,USD
+2026-10-06,sub-contoso-prod,rg-web-prod,app-web-prod,Azure App Service,P1v3 App Service Hours,61.76,USD
+2026-10-06,sub-contoso-prod,rg-web-prod,fd-web-prod,Azure Front Door,Data Transfer Out,18.75,USD
+2026-10-06,sub-contoso-prod,rg-web-prod,sql-web-prod,SQL Database,vCore,82.72,USD
+2026-10-07,sub-contoso-prod,rg-ai-dev,aoai-dev,Foundry Models,gpt-5.4-mini Input Tokens,16.49,USD
+2026-10-07,sub-contoso-prod,rg-ai-dev,srch-dev,Azure AI Search,Standard S1 Unit,7.06,USD
+2026-10-07,sub-contoso-prod,rg-data-prod,adf-ingest-prod,Azure Data Factory v2,Orchestration Activity Run,31.97,USD
+2026-10-07,sub-contoso-prod,rg-data-prod,dbw-analytics-prod,Azure Databricks,Premium All-purpose Compute DBU,149.18,USD
+2026-10-07,sub-contoso-prod,rg-data-prod,st-lake-prod,Storage,Hot LRS Data Stored,49.26,USD
+2026-10-07,sub-contoso-prod,rg-platform,aks-platform,Azure Kubernetes Service,Standard Uptime SLA,79.53,USD
+2026-10-07,sub-contoso-prod,rg-platform,kv-platform,Key Vault,Operations,3.97,USD
+2026-10-07,sub-contoso-prod,rg-platform,log-platform,Log Analytics,Analytics Logs Data Ingestion,36.72,USD
+2026-10-07,sub-contoso-prod,rg-platform,vmss-aks-nodes,Virtual Machines,D4s v5,166.33,USD
+2026-10-07,sub-contoso-prod,rg-web-prod,app-web-prod,Azure App Service,P1v3 App Service Hours,54.14,USD
+2026-10-07,sub-contoso-prod,rg-web-prod,fd-web-prod,Azure Front Door,Data Transfer Out,23.59,USD
+2026-10-07,sub-contoso-prod,rg-web-prod,sql-web-prod,SQL Database,vCore,81.87,USD
+2026-10-08,sub-contoso-prod,rg-ai-dev,aoai-dev,Foundry Models,gpt-5.4-mini Input Tokens,18.08,USD
+2026-10-08,sub-contoso-prod,rg-ai-dev,srch-dev,Azure AI Search,Standard S1 Unit,7.73,USD
+2026-10-08,sub-contoso-prod,rg-data-prod,adf-ingest-prod,Azure Data Factory v2,Orchestration Activity Run,29.28,USD
+2026-10-08,sub-contoso-prod,rg-data-prod,dbw-analytics-prod,Azure Databricks,Premium All-purpose Compute DBU,155.78,USD
+2026-10-08,sub-contoso-prod,rg-data-prod,st-lake-prod,Storage,Hot LRS Data Stored,40.44,USD
+2026-10-08,sub-contoso-prod,rg-platform,aks-platform,Azure Kubernetes Service,Standard Uptime SLA,62.17,USD
+2026-10-08,sub-contoso-prod,rg-platform,kv-platform,Key Vault,Operations,3.73,USD
+2026-10-08,sub-contoso-prod,rg-platform,log-platform,Log Analytics,Analytics Logs Data Ingestion,36.54,USD
+2026-10-08,sub-contoso-prod,rg-platform,vmss-aks-nodes,Virtual Machines,D4s v5,161.05,USD
+2026-10-08,sub-contoso-prod,rg-web-prod,app-web-prod,Azure App Service,P1v3 App Service Hours,62.42,USD
+2026-10-08,sub-contoso-prod,rg-web-prod,fd-web-prod,Azure Front Door,Data Transfer Out,21.27,USD
+2026-10-08,sub-contoso-prod,rg-web-prod,sql-web-prod,SQL Database,vCore,85.72,USD
+2026-10-09,sub-contoso-prod,rg-ai-dev,aoai-dev,Foundry Models,gpt-5.4-mini Input Tokens,20.32,USD
+2026-10-09,sub-contoso-prod,rg-ai-dev,srch-dev,Azure AI Search,Standard S1 Unit,7.81,USD
+2026-10-09,sub-contoso-prod,rg-data-prod,adf-ingest-prod,Azure Data Factory v2,Orchestration Activity Run,32.22,USD
+2026-10-09,sub-contoso-prod,rg-data-prod,dbw-analytics-prod,Azure Databricks,Premium All-purpose Compute DBU,141.32,USD
+2026-10-09,sub-contoso-prod,rg-data-prod,st-lake-prod,Storage,Hot LRS Data Stored,41.22,USD
+2026-10-09,sub-contoso-prod,rg-platform,aks-platform,Azure Kubernetes Service,Standard Uptime SLA,76.46,USD
+2026-10-09,sub-contoso-prod,rg-platform,kv-platform,Key Vault,Operations,3.41,USD
+2026-10-09,sub-contoso-prod,rg-platform,log-platform,Log Analytics,Analytics Logs Data Ingestion,34.09,USD
+2026-10-09,sub-contoso-prod,rg-platform,vmss-aks-nodes,Virtual Machines,D4s v5,136.34,USD
+2026-10-09,sub-contoso-prod,rg-web-prod,app-web-prod,Azure App Service,P1v3 App Service Hours,69.81,USD
+2026-10-09,sub-contoso-prod,rg-web-prod,fd-web-prod,Azure Front Door,Data Transfer Out,20.50,USD
+2026-10-09,sub-contoso-prod,rg-web-prod,sql-web-prod,SQL Database,vCore,98.44,USD
+2026-10-10,sub-contoso-prod,rg-ai-dev,aoai-dev,Foundry Models,gpt-5.4-mini Input Tokens,16.48,USD
+2026-10-10,sub-contoso-prod,rg-ai-dev,srch-dev,Azure AI Search,Standard S1 Unit,8.40,USD
+2026-10-10,sub-contoso-prod,rg-data-prod,adf-ingest-prod,Azure Data Factory v2,Orchestration Activity Run,35.96,USD
+2026-10-10,sub-contoso-prod,rg-data-prod,dbw-analytics-prod,Azure Databricks,Premium All-purpose Compute DBU,146.74,USD
+2026-10-10,sub-contoso-prod,rg-data-prod,st-lake-prod,Storage,Hot LRS Data Stored,45.33,USD
+2026-10-10,sub-contoso-prod,rg-platform,aks-platform,Azure Kubernetes Service,Standard Uptime SLA,67.14,USD
+2026-10-10,sub-contoso-prod,rg-platform,kv-platform,Key Vault,Operations,3.74,USD
+2026-10-10,sub-contoso-prod,rg-platform,log-platform,Log Analytics,Analytics Logs Data Ingestion,44.53,USD
+2026-10-10,sub-contoso-prod,rg-platform,vmss-aks-nodes,Virtual Machines,D4s v5,170.69,USD
+2026-10-10,sub-contoso-prod,rg-web-prod,app-web-prod,Azure App Service,P1v3 App Service Hours,69.00,USD
+2026-10-10,sub-contoso-prod,rg-web-prod,fd-web-prod,Azure Front Door,Data Transfer Out,22.99,USD
+2026-10-10,sub-contoso-prod,rg-web-prod,sql-web-prod,SQL Database,vCore,83.75,USD
+2026-10-11,sub-contoso-prod,rg-ai-dev,aoai-dev,Foundry Models,gpt-5.4-mini Input Tokens,18.63,USD
+2026-10-11,sub-contoso-prod,rg-ai-dev,srch-dev,Azure AI Search,Standard S1 Unit,9.32,USD
+2026-10-11,sub-contoso-prod,rg-data-prod,adf-ingest-prod,Azure Data Factory v2,Orchestration Activity Run,37.59,USD
+2026-10-11,sub-contoso-prod,rg-data-prod,dbw-analytics-prod,Azure Databricks,Premium All-purpose Compute DBU,119.56,USD
+2026-10-11,sub-contoso-prod,rg-data-prod,st-lake-prod,Storage,Hot LRS Data Stored,51.06,USD
+2026-10-11,sub-contoso-prod,rg-platform,aks-platform,Azure Kubernetes Service,Standard Uptime SLA,66.71,USD
+2026-10-11,sub-contoso-prod,rg-platform,kv-platform,Key Vault,Operations,3.64,USD
+2026-10-11,sub-contoso-prod,rg-platform,log-platform,Log Analytics,Analytics Logs Data Ingestion,37.34,USD
+2026-10-11,sub-contoso-prod,rg-platform,vmss-aks-nodes,Virtual Machines,D4s v5,171.02,USD
+2026-10-11,sub-contoso-prod,rg-web-prod,app-web-prod,Azure App Service,P1v3 App Service Hours,62.06,USD
+2026-10-11,sub-contoso-prod,rg-web-prod,fd-web-prod,Azure Front Door,Data Transfer Out,23.26,USD
+2026-10-11,sub-contoso-prod,rg-web-prod,sql-web-prod,SQL Database,vCore,86.52,USD
+2026-10-12,sub-contoso-prod,rg-ai-dev,aoai-dev,Foundry Models,gpt-5.4-mini Input Tokens,18.04,USD
+2026-10-12,sub-contoso-prod,rg-ai-dev,srch-dev,Azure AI Search,Standard S1 Unit,8.52,USD
+2026-10-12,sub-contoso-prod,rg-data-prod,adf-ingest-prod,Azure Data Factory v2,Orchestration Activity Run,29.36,USD
+2026-10-12,sub-contoso-prod,rg-data-prod,dbw-analytics-prod,Azure Databricks,Premium All-purpose Compute DBU,139.05,USD
+2026-10-12,sub-contoso-prod,rg-data-prod,st-lake-prod,Storage,Hot LRS Data Stored,48.37,USD
+2026-10-12,sub-contoso-prod,rg-platform,aks-platform,Azure Kubernetes Service,Standard Uptime SLA,68.97,USD
+2026-10-12,sub-contoso-prod,rg-platform,kv-platform,Key Vault,Operations,3.87,USD
+2026-10-12,sub-contoso-prod,rg-platform,log-platform,Log Analytics,Analytics Logs Data Ingestion,39.40,USD
+2026-10-12,sub-contoso-prod,rg-platform,vmss-aks-nodes,Virtual Machines,D4s v5,148.93,USD
+2026-10-12,sub-contoso-prod,rg-web-prod,app-web-prod,Azure App Service,P1v3 App Service Hours,67.88,USD
+2026-10-12,sub-contoso-prod,rg-web-prod,fd-web-prod,Azure Front Door,Data Transfer Out,22.64,USD
+2026-10-12,sub-contoso-prod,rg-web-prod,sql-web-prod,SQL Database,vCore,81.83,USD
+2026-10-13,sub-contoso-prod,rg-ai-dev,aoai-dev,Foundry Models,gpt-5.4-mini Input Tokens,20.44,USD
+2026-10-13,sub-contoso-prod,rg-ai-dev,srch-dev,Azure AI Search,Standard S1 Unit,7.46,USD
+2026-10-13,sub-contoso-prod,rg-data-prod,adf-ingest-prod,Azure Data Factory v2,Orchestration Activity Run,38.32,USD
+2026-10-13,sub-contoso-prod,rg-data-prod,dbw-analytics-prod,Azure Databricks,Premium All-purpose Compute DBU,130.81,USD
+2026-10-13,sub-contoso-prod,rg-data-prod,st-lake-prod,Storage,Hot LRS Data Stored,41.91,USD
+2026-10-13,sub-contoso-prod,rg-platform,aks-platform,Azure Kubernetes Service,Standard Uptime SLA,72.18,USD
+2026-10-13,sub-contoso-prod,rg-platform,kv-platform,Key Vault,Operations,3.48,USD
+2026-10-13,sub-contoso-prod,rg-platform,log-platform,Log Analytics,Analytics Logs Data Ingestion,33.27,USD
+2026-10-13,sub-contoso-prod,rg-platform,vmss-aks-nodes,Virtual Machines,D4s v5,168.33,USD
+2026-10-13,sub-contoso-prod,rg-web-prod,app-web-prod,Azure App Service,P1v3 App Service Hours,67.69,USD
+2026-10-13,sub-contoso-prod,rg-web-prod,fd-web-prod,Azure Front Door,Data Transfer Out,23.43,USD
+2026-10-13,sub-contoso-prod,rg-web-prod,sql-web-prod,SQL Database,vCore,79.85,USD
+2026-10-14,sub-contoso-prod,rg-ai-dev,aoai-dev,Foundry Models,gpt-5.4-mini Input Tokens,16.59,USD
+2026-10-14,sub-contoso-prod,rg-ai-dev,srch-dev,Azure AI Search,Standard S1 Unit,9.00,USD
+2026-10-14,sub-contoso-prod,rg-data-prod,adf-ingest-prod,Azure Data Factory v2,Orchestration Activity Run,35.64,USD
+2026-10-14,sub-contoso-prod,rg-data-prod,dbw-analytics-prod,Azure Databricks,Premium All-purpose Compute DBU,120.86,USD
+2026-10-14,sub-contoso-prod,rg-data-prod,st-lake-prod,Storage,Hot LRS Data Stored,46.26,USD
+2026-10-14,sub-contoso-prod,rg-platform,aks-platform,Azure Kubernetes Service,Standard Uptime SLA,64.86,USD
+2026-10-14,sub-contoso-prod,rg-platform,kv-platform,Key Vault,Operations,3.26,USD
+2026-10-14,sub-contoso-prod,rg-platform,log-platform,Log Analytics,Analytics Logs Data Ingestion,36.14,USD
+2026-10-14,sub-contoso-prod,rg-platform,vmss-aks-nodes,Virtual Machines,D4s v5,154.30,USD
+2026-10-14,sub-contoso-prod,rg-web-prod,app-web-prod,Azure App Service,P1v3 App Service Hours,56.68,USD
+2026-10-14,sub-contoso-prod,rg-web-prod,fd-web-prod,Azure Front Door,Data Transfer Out,18.73,USD
+2026-10-14,sub-contoso-prod,rg-web-prod,sql-web-prod,SQL Database,vCore,97.03,USD
+2026-10-15,sub-contoso-prod,rg-ai-dev,aoai-dev,Foundry Models,gpt-5.4-mini Input Tokens,18.63,USD
+2026-10-15,sub-contoso-prod,rg-ai-dev,srch-dev,Azure AI Search,Standard S1 Unit,8.92,USD
+2026-10-15,sub-contoso-prod,rg-data-prod,adf-ingest-prod,Azure Data Factory v2,Orchestration Activity Run,31.04,USD
+2026-10-15,sub-contoso-prod,rg-data-prod,dbw-analytics-prod,Azure Databricks,Premium All-purpose Compute DBU,156.92,USD
+2026-10-15,sub-contoso-prod,rg-data-prod,st-lake-prod,Storage,Hot LRS Data Stored,47.81,USD
+2026-10-15,sub-contoso-prod,rg-platform,aks-platform,Azure Kubernetes Service,Standard Uptime SLA,81.03,USD
+2026-10-15,sub-contoso-prod,rg-platform,kv-platform,Key Vault,Operations,3.31,USD
+2026-10-15,sub-contoso-prod,rg-platform,log-platform,Log Analytics,Analytics Logs Data Ingestion,34.27,USD
+2026-10-15,sub-contoso-prod,rg-platform,vmss-aks-nodes,Virtual Machines,D4s v5,171.82,USD
+2026-10-15,sub-contoso-prod,rg-web-prod,app-web-prod,Azure App Service,P1v3 App Service Hours,54.34,USD
+2026-10-15,sub-contoso-prod,rg-web-prod,fd-web-prod,Azure Front Door,Data Transfer Out,22.36,USD
+2026-10-15,sub-contoso-prod,rg-web-prod,sql-web-prod,SQL Database,vCore,78.21,USD
+2026-10-16,sub-contoso-prod,rg-ai-dev,aoai-dev,Foundry Models,gpt-5.4-mini Input Tokens,15.68,USD
+2026-10-16,sub-contoso-prod,rg-ai-dev,srch-dev,Azure AI Search,Standard S1 Unit,8.96,USD
+2026-10-16,sub-contoso-prod,rg-data-prod,adf-ingest-prod,Azure Data Factory v2,Orchestration Activity Run,35.43,USD
+2026-10-16,sub-contoso-prod,rg-data-prod,dbw-analytics-prod,Azure Databricks,Premium All-purpose Compute DBU,136.76,USD
+2026-10-16,sub-contoso-prod,rg-data-prod,st-lake-prod,Storage,Hot LRS Data Stored,40.14,USD
+2026-10-16,sub-contoso-prod,rg-platform,aks-platform,Azure Kubernetes Service,Standard Uptime SLA,70.73,USD
+2026-10-16,sub-contoso-prod,rg-platform,kv-platform,Key Vault,Operations,3.69,USD
+2026-10-16,sub-contoso-prod,rg-platform,log-platform,Log Analytics,Analytics Logs Data Ingestion,38.67,USD
+2026-10-16,sub-contoso-prod,rg-platform,vmss-aks-nodes,Virtual Machines,D4s v5,160.33,USD
+2026-10-16,sub-contoso-prod,rg-web-prod,app-web-prod,Azure App Service,P1v3 App Service Hours,56.48,USD
+2026-10-16,sub-contoso-prod,rg-web-prod,fd-web-prod,Azure Front Door,Data Transfer Out,20.39,USD
+2026-10-16,sub-contoso-prod,rg-web-prod,sql-web-prod,SQL Database,vCore,89.21,USD
+2026-10-17,sub-contoso-prod,rg-ai-dev,aoai-dev,Foundry Models,gpt-5.4-mini Input Tokens,17.46,USD
+2026-10-17,sub-contoso-prod,rg-ai-dev,srch-dev,Azure AI Search,Standard S1 Unit,8.86,USD
+2026-10-17,sub-contoso-prod,rg-data-prod,adf-ingest-prod,Azure Data Factory v2,Orchestration Activity Run,34.10,USD
+2026-10-17,sub-contoso-prod,rg-data-prod,dbw-analytics-prod,Azure Databricks,Premium All-purpose Compute DBU,134.51,USD
+2026-10-17,sub-contoso-prod,rg-data-prod,st-lake-prod,Storage,Hot LRS Data Stored,45.01,USD
+2026-10-17,sub-contoso-prod,rg-platform,aks-platform,Azure Kubernetes Service,Standard Uptime SLA,66.68,USD
+2026-10-17,sub-contoso-prod,rg-platform,kv-platform,Key Vault,Operations,3.05,USD
+2026-10-17,sub-contoso-prod,rg-platform,log-platform,Log Analytics,Analytics Logs Data Ingestion,41.63,USD
+2026-10-17,sub-contoso-prod,rg-platform,vmss-aks-nodes,Virtual Machines,D4s v5,138.52,USD
+2026-10-17,sub-contoso-prod,rg-web-prod,app-web-prod,Azure App Service,P1v3 App Service Hours,63.56,USD
+2026-10-17,sub-contoso-prod,rg-web-prod,fd-web-prod,Azure Front Door,Data Transfer Out,19.90,USD
+2026-10-17,sub-contoso-prod,rg-web-prod,sql-web-prod,SQL Database,vCore,92.99,USD
+2026-10-18,sub-contoso-prod,rg-ai-dev,aoai-dev,Foundry Models,gpt-5.4-mini Input Tokens,19.81,USD
+2026-10-18,sub-contoso-prod,rg-ai-dev,srch-dev,Azure AI Search,Standard S1 Unit,8.95,USD
+2026-10-18,sub-contoso-prod,rg-data-prod,adf-ingest-prod,Azure Data Factory v2,Orchestration Activity Run,29.28,USD
+2026-10-18,sub-contoso-prod,rg-data-prod,dbw-analytics-prod,Azure Databricks,Premium All-purpose Compute DBU,122.18,USD
+2026-10-18,sub-contoso-prod,rg-data-prod,st-lake-prod,Storage,Hot LRS Data Stored,44.63,USD
+2026-10-18,sub-contoso-prod,rg-platform,aks-platform,Azure Kubernetes Service,Standard Uptime SLA,70.44,USD
+2026-10-18,sub-contoso-prod,rg-platform,kv-platform,Key Vault,Operations,3.29,USD
+2026-10-18,sub-contoso-prod,rg-platform,log-platform,Log Analytics,Analytics Logs Data Ingestion,42.93,USD
+2026-10-18,sub-contoso-prod,rg-platform,vmss-aks-nodes,Virtual Machines,D4s v5,176.99,USD
+2026-10-18,sub-contoso-prod,rg-web-prod,app-web-prod,Azure App Service,P1v3 App Service Hours,65.23,USD
+2026-10-18,sub-contoso-prod,rg-web-prod,fd-web-prod,Azure Front Door,Data Transfer Out,21.70,USD
+2026-10-18,sub-contoso-prod,rg-web-prod,sql-web-prod,SQL Database,vCore,83.07,USD
+2026-10-19,sub-contoso-prod,rg-ai-dev,aoai-dev,Foundry Models,gpt-5.4-mini Input Tokens,19.04,USD
+2026-10-19,sub-contoso-prod,rg-ai-dev,srch-dev,Azure AI Search,Standard S1 Unit,9.18,USD
+2026-10-19,sub-contoso-prod,rg-data-prod,adf-ingest-prod,Azure Data Factory v2,Orchestration Activity Run,37.37,USD
+2026-10-19,sub-contoso-prod,rg-data-prod,dbw-analytics-prod,Azure Databricks,Premium All-purpose Compute DBU,129.28,USD
+2026-10-19,sub-contoso-prod,rg-data-prod,st-lake-prod,Storage,Hot LRS Data Stored,48.83,USD
+2026-10-19,sub-contoso-prod,rg-platform,aks-platform,Azure Kubernetes Service,Standard Uptime SLA,77.08,USD
+2026-10-19,sub-contoso-prod,rg-platform,kv-platform,Key Vault,Operations,3.94,USD
+2026-10-19,sub-contoso-prod,rg-platform,log-platform,Log Analytics,Analytics Logs Data Ingestion,37.18,USD
+2026-10-19,sub-contoso-prod,rg-platform,vmss-aks-nodes,Virtual Machines,D4s v5,152.84,USD
+2026-10-19,sub-contoso-prod,rg-web-prod,app-web-prod,Azure App Service,P1v3 App Service Hours,55.69,USD
+2026-10-19,sub-contoso-prod,rg-web-prod,fd-web-prod,Azure Front Door,Data Transfer Out,23.80,USD
+2026-10-19,sub-contoso-prod,rg-web-prod,sql-web-prod,SQL Database,vCore,95.43,USD
+2026-10-20,sub-contoso-prod,rg-ai-dev,aoai-dev,Foundry Models,gpt-5.4-mini Input Tokens,20.53,USD
+2026-10-20,sub-contoso-prod,rg-ai-dev,srch-dev,Azure AI Search,Standard S1 Unit,7.70,USD
+2026-10-20,sub-contoso-prod,rg-data-prod,adf-ingest-prod,Azure Data Factory v2,Orchestration Activity Run,32.25,USD
+2026-10-20,sub-contoso-prod,rg-data-prod,dbw-analytics-prod,Azure Databricks,Premium All-purpose Compute DBU,132.62,USD
+2026-10-20,sub-contoso-prod,rg-data-prod,st-lake-prod,Storage,Hot LRS Data Stored,51.26,USD
+2026-10-20,sub-contoso-prod,rg-platform,aks-platform,Azure Kubernetes Service,Standard Uptime SLA,63.21,USD
+2026-10-20,sub-contoso-prod,rg-platform,kv-platform,Key Vault,Operations,3.48,USD
+2026-10-20,sub-contoso-prod,rg-platform,log-platform,Log Analytics,Analytics Logs Data Ingestion,38.42,USD
+2026-10-20,sub-contoso-prod,rg-platform,vmss-aks-nodes,Virtual Machines,D4s v5,167.95,USD
+2026-10-20,sub-contoso-prod,rg-web-prod,app-web-prod,Azure App Service,P1v3 App Service Hours,66.58,USD
+2026-10-20,sub-contoso-prod,rg-web-prod,fd-web-prod,Azure Front Door,Data Transfer Out,19.27,USD
+2026-10-20,sub-contoso-prod,rg-web-prod,sql-web-prod,SQL Database,vCore,94.54,USD
+2026-10-21,sub-contoso-prod,rg-ai-dev,aoai-dev,Foundry Models,gpt-5.4-mini Input Tokens,19.61,USD
+2026-10-21,sub-contoso-prod,rg-ai-dev,srch-dev,Azure AI Search,Standard S1 Unit,8.42,USD
+2026-10-21,sub-contoso-prod,rg-data-prod,adf-ingest-prod,Azure Data Factory v2,Orchestration Activity Run,37.79,USD
+2026-10-21,sub-contoso-prod,rg-data-prod,dbw-analytics-prod,Azure Databricks,Premium All-purpose Compute DBU,146.96,USD
+2026-10-21,sub-contoso-prod,rg-data-prod,st-lake-prod,Storage,Hot LRS Data Stored,41.57,USD
+2026-10-21,sub-contoso-prod,rg-platform,aks-platform,Azure Kubernetes Service,Standard Uptime SLA,68.33,USD
+2026-10-21,sub-contoso-prod,rg-platform,kv-platform,Key Vault,Operations,3.60,USD
+2026-10-21,sub-contoso-prod,rg-platform,log-platform,Log Analytics,Analytics Logs Data Ingestion,35.91,USD
+2026-10-21,sub-contoso-prod,rg-platform,vmss-aks-nodes,Virtual Machines,D4s v5,152.36,USD
+2026-10-21,sub-contoso-prod,rg-web-prod,app-web-prod,Azure App Service,P1v3 App Service Hours,63.31,USD
+2026-10-21,sub-contoso-prod,rg-web-prod,fd-web-prod,Azure Front Door,Data Transfer Out,19.29,USD
+2026-10-21,sub-contoso-prod,rg-web-prod,sql-web-prod,SQL Database,vCore,93.13,USD
+2026-10-22,sub-contoso-prod,rg-ai-dev,aoai-dev,Foundry Models,gpt-5.4-mini Input Tokens,16.17,USD
+2026-10-22,sub-contoso-prod,rg-ai-dev,srch-dev,Azure AI Search,Standard S1 Unit,8.63,USD
+2026-10-22,sub-contoso-prod,rg-data-prod,adf-ingest-prod,Azure Data Factory v2,Orchestration Activity Run,37.37,USD
+2026-10-22,sub-contoso-prod,rg-data-prod,dbw-analytics-prod,Azure Databricks,Premium All-purpose Compute DBU,143.52,USD
+2026-10-22,sub-contoso-prod,rg-data-prod,st-lake-prod,Storage,Hot LRS Data Stored,43.91,USD
+2026-10-22,sub-contoso-prod,rg-platform,aks-platform,Azure Kubernetes Service,Standard Uptime SLA,68.48,USD
+2026-10-22,sub-contoso-prod,rg-platform,kv-platform,Key Vault,Operations,3.39,USD
+2026-10-22,sub-contoso-prod,rg-platform,log-platform,Log Analytics,Analytics Logs Data Ingestion,33.52,USD
+2026-10-22,sub-contoso-prod,rg-platform,vmss-aks-nodes,Virtual Machines,D4s v5,170.09,USD
+2026-10-22,sub-contoso-prod,rg-web-prod,app-web-prod,Azure App Service,P1v3 App Service Hours,61.33,USD
+2026-10-22,sub-contoso-prod,rg-web-prod,fd-web-prod,Azure Front Door,Data Transfer Out,19.87,USD
+2026-10-22,sub-contoso-prod,rg-web-prod,sql-web-prod,SQL Database,vCore,75.07,USD
+2026-10-23,sub-contoso-prod,rg-ai-dev,aoai-dev,Foundry Models,gpt-5.4-mini Input Tokens,16.86,USD
+2026-10-23,sub-contoso-prod,rg-ai-dev,srch-dev,Azure AI Search,Standard S1 Unit,7.97,USD
+2026-10-23,sub-contoso-prod,rg-data-prod,adf-ingest-prod,Azure Data Factory v2,Orchestration Activity Run,33.77,USD
+2026-10-23,sub-contoso-prod,rg-data-prod,dbw-analytics-prod,Azure Databricks,Premium All-purpose Compute DBU,143.90,USD
+2026-10-23,sub-contoso-prod,rg-data-prod,st-lake-prod,Storage,Hot LRS Data Stored,49.72,USD
+2026-10-23,sub-contoso-prod,rg-platform,aks-platform,Azure Kubernetes Service,Standard Uptime SLA,82.87,USD
+2026-10-23,sub-contoso-prod,rg-platform,kv-platform,Key Vault,Operations,3.74,USD
+2026-10-23,sub-contoso-prod,rg-platform,log-platform,Log Analytics,Analytics Logs Data Ingestion,43.00,USD
+2026-10-23,sub-contoso-prod,rg-platform,vmss-aks-nodes,Virtual Machines,D4s v5,160.47,USD
+2026-10-23,sub-contoso-prod,rg-web-prod,app-web-prod,Azure App Service,P1v3 App Service Hours,62.20,USD
+2026-10-23,sub-contoso-prod,rg-web-prod,fd-web-prod,Azure Front Door,Data Transfer Out,23.82,USD
+2026-10-23,sub-contoso-prod,rg-web-prod,sql-web-prod,SQL Database,vCore,94.82,USD
+2026-10-24,sub-contoso-prod,rg-ai-dev,aoai-dev,Foundry Models,gpt-5.4-mini Input Tokens,16.88,USD
+2026-10-24,sub-contoso-prod,rg-ai-dev,srch-dev,Azure AI Search,Standard S1 Unit,7.01,USD
+2026-10-24,sub-contoso-prod,rg-data-prod,adf-ingest-prod,Azure Data Factory v2,Orchestration Activity Run,29.32,USD
+2026-10-24,sub-contoso-prod,rg-data-prod,dbw-analytics-prod,Azure Databricks,Premium All-purpose Compute DBU,130.14,USD
+2026-10-24,sub-contoso-prod,rg-data-prod,st-lake-prod,Storage,Hot LRS Data Stored,51.71,USD
+2026-10-24,sub-contoso-prod,rg-platform,aks-platform,Azure Kubernetes Service,Standard Uptime SLA,74.01,USD
+2026-10-24,sub-contoso-prod,rg-platform,kv-platform,Key Vault,Operations,3.52,USD
+2026-10-24,sub-contoso-prod,rg-platform,log-platform,Log Analytics,Analytics Logs Data Ingestion,40.62,USD
+2026-10-24,sub-contoso-prod,rg-platform,vmss-aks-nodes,Virtual Machines,D4s v5,158.53,USD
+2026-10-24,sub-contoso-prod,rg-web-prod,app-web-prod,Azure App Service,P1v3 App Service Hours,55.20,USD
+2026-10-24,sub-contoso-prod,rg-web-prod,fd-web-prod,Azure Front Door,Data Transfer Out,18.26,USD
+2026-10-24,sub-contoso-prod,rg-web-prod,sql-web-prod,SQL Database,vCore,96.89,USD
+2026-10-25,sub-contoso-prod,rg-ai-dev,aoai-dev,Foundry Models,gpt-5.4-mini Input Tokens,17.15,USD
+2026-10-25,sub-contoso-prod,rg-ai-dev,srch-dev,Azure AI Search,Standard S1 Unit,7.07,USD
+2026-10-25,sub-contoso-prod,rg-data-prod,adf-ingest-prod,Azure Data Factory v2,Orchestration Activity Run,31.26,USD
+2026-10-25,sub-contoso-prod,rg-data-prod,dbw-analytics-prod,Azure Databricks,Premium All-purpose Compute DBU,153.98,USD
+2026-10-25,sub-contoso-prod,rg-data-prod,st-lake-prod,Storage,Hot LRS Data Stored,47.15,USD
+2026-10-25,sub-contoso-prod,rg-platform,aks-platform,Azure Kubernetes Service,Standard Uptime SLA,71.76,USD
+2026-10-25,sub-contoso-prod,rg-platform,kv-platform,Key Vault,Operations,3.98,USD
+2026-10-25,sub-contoso-prod,rg-platform,log-platform,Log Analytics,Analytics Logs Data Ingestion,37.58,USD
+2026-10-25,sub-contoso-prod,rg-platform,vmss-aks-nodes,Virtual Machines,D4s v5,164.31,USD
+2026-10-25,sub-contoso-prod,rg-web-prod,app-web-prod,Azure App Service,P1v3 App Service Hours,63.78,USD
+2026-10-25,sub-contoso-prod,rg-web-prod,fd-web-prod,Azure Front Door,Data Transfer Out,21.20,USD
+2026-10-25,sub-contoso-prod,rg-web-prod,sql-web-prod,SQL Database,vCore,98.47,USD
+2026-10-26,sub-contoso-prod,rg-ai-dev,aoai-dev,Foundry Models,gpt-5.4-mini Input Tokens,17.79,USD
+2026-10-26,sub-contoso-prod,rg-ai-dev,srch-dev,Azure AI Search,Standard S1 Unit,8.71,USD
+2026-10-26,sub-contoso-prod,rg-data-prod,adf-ingest-prod,Azure Data Factory v2,Orchestration Activity Run,28.99,USD
+2026-10-26,sub-contoso-prod,rg-data-prod,dbw-analytics-prod,Azure Databricks,Premium All-purpose Compute DBU,152.61,USD
+2026-10-26,sub-contoso-prod,rg-data-prod,st-lake-prod,Storage,Hot LRS Data Stored,43.96,USD
+2026-10-26,sub-contoso-prod,rg-platform,aks-platform,Azure Kubernetes Service,Standard Uptime SLA,82.39,USD
+2026-10-26,sub-contoso-prod,rg-platform,kv-platform,Key Vault,Operations,3.14,USD
+2026-10-26,sub-contoso-prod,rg-platform,log-platform,Log Analytics,Analytics Logs Data Ingestion,34.73,USD
+2026-10-26,sub-contoso-prod,rg-platform,vmss-aks-nodes,Virtual Machines,D4s v5,167.12,USD
+2026-10-26,sub-contoso-prod,rg-web-prod,app-web-prod,Azure App Service,P1v3 App Service Hours,70.75,USD
+2026-10-26,sub-contoso-prod,rg-web-prod,fd-web-prod,Azure Front Door,Data Transfer Out,18.23,USD
+2026-10-26,sub-contoso-prod,rg-web-prod,sql-web-prod,SQL Database,vCore,86.02,USD
+2026-10-27,sub-contoso-prod,rg-ai-dev,aoai-dev,Foundry Models,gpt-5.4-mini Input Tokens,17.71,USD
+2026-10-27,sub-contoso-prod,rg-ai-dev,srch-dev,Azure AI Search,Standard S1 Unit,9.14,USD
+2026-10-27,sub-contoso-prod,rg-data-prod,adf-ingest-prod,Azure Data Factory v2,Orchestration Activity Run,36.48,USD
+2026-10-27,sub-contoso-prod,rg-data-prod,dbw-analytics-prod,Azure Databricks,Premium All-purpose Compute DBU,131.19,USD
+2026-10-27,sub-contoso-prod,rg-data-prod,st-lake-prod,Storage,Hot LRS Data Stored,40.47,USD
+2026-10-27,sub-contoso-prod,rg-platform,aks-platform,Azure Kubernetes Service,Standard Uptime SLA,64.47,USD
+2026-10-27,sub-contoso-prod,rg-platform,kv-platform,Key Vault,Operations,3.46,USD
+2026-10-27,sub-contoso-prod,rg-platform,log-platform,Log Analytics,Analytics Logs Data Ingestion,38.37,USD
+2026-10-27,sub-contoso-prod,rg-platform,vmss-aks-nodes,Virtual Machines,D4s v5,177.04,USD
+2026-10-27,sub-contoso-prod,rg-web-prod,app-web-prod,Azure App Service,P1v3 App Service Hours,55.27,USD
+2026-10-27,sub-contoso-prod,rg-web-prod,fd-web-prod,Azure Front Door,Data Transfer Out,18.21,USD
+2026-10-27,sub-contoso-prod,rg-web-prod,sql-web-prod,SQL Database,vCore,82.65,USD
+2026-10-28,sub-contoso-prod,rg-ai-dev,aoai-dev,Foundry Models,gpt-5.4-mini Input Tokens,17.64,USD
+2026-10-28,sub-contoso-prod,rg-ai-dev,srch-dev,Azure AI Search,Standard S1 Unit,8.66,USD
+2026-10-28,sub-contoso-prod,rg-data-prod,adf-ingest-prod,Azure Data Factory v2,Orchestration Activity Run,30.23,USD
+2026-10-28,sub-contoso-prod,rg-data-prod,dbw-analytics-prod,Azure Databricks,Premium All-purpose Compute DBU,123.85,USD
+2026-10-28,sub-contoso-prod,rg-data-prod,st-lake-prod,Storage,Hot LRS Data Stored,42.42,USD
+2026-10-28,sub-contoso-prod,rg-platform,aks-platform,Azure Kubernetes Service,Standard Uptime SLA,70.11,USD
+2026-10-28,sub-contoso-prod,rg-platform,kv-platform,Key Vault,Operations,3.83,USD
+2026-10-28,sub-contoso-prod,rg-platform,log-platform,Log Analytics,Analytics Logs Data Ingestion,36.54,USD
+2026-10-28,sub-contoso-prod,rg-platform,vmss-aks-nodes,Virtual Machines,D4s v5,147.04,USD
+2026-10-28,sub-contoso-prod,rg-web-prod,app-web-prod,Azure App Service,P1v3 App Service Hours,65.56,USD
+2026-10-28,sub-contoso-prod,rg-web-prod,fd-web-prod,Azure Front Door,Data Transfer Out,18.20,USD
+2026-10-28,sub-contoso-prod,rg-web-prod,sql-web-prod,SQL Database,vCore,79.80,USD
+2026-10-29,sub-contoso-prod,rg-ai-dev,aoai-dev,Foundry Models,gpt-5.4-mini Input Tokens,19.60,USD
+2026-10-29,sub-contoso-prod,rg-ai-dev,srch-dev,Azure AI Search,Standard S1 Unit,8.77,USD
+2026-10-29,sub-contoso-prod,rg-data-prod,adf-ingest-prod,Azure Data Factory v2,Orchestration Activity Run,36.85,USD
+2026-10-29,sub-contoso-prod,rg-data-prod,dbw-analytics-prod,Azure Databricks,Premium All-purpose Compute DBU,854.80,USD
+2026-10-29,sub-contoso-prod,rg-data-prod,st-lake-prod,Storage,Hot LRS Data Stored,43.92,USD
+2026-10-29,sub-contoso-prod,rg-platform,aks-platform,Azure Kubernetes Service,Standard Uptime SLA,239.61,USD
+2026-10-29,sub-contoso-prod,rg-platform,kv-platform,Key Vault,Operations,3.32,USD
+2026-10-29,sub-contoso-prod,rg-platform,log-platform,Log Analytics,Analytics Logs Data Ingestion,35.18,USD
+2026-10-29,sub-contoso-prod,rg-platform,vmss-aks-nodes,Virtual Machines,D4s v5,139.13,USD
+2026-10-29,sub-contoso-prod,rg-web-prod,app-web-prod,Azure App Service,P1v3 App Service Hours,61.20,USD
+2026-10-29,sub-contoso-prod,rg-web-prod,fd-web-prod,Azure Front Door,Data Transfer Out,18.36,USD
+2026-10-29,sub-contoso-prod,rg-web-prod,sql-web-prod,SQL Database,vCore,93.92,USD
+2026-10-30,sub-contoso-prod,rg-ai-dev,aoai-dev,Foundry Models,gpt-5.4-mini Input Tokens,17.70,USD
+2026-10-30,sub-contoso-prod,rg-ai-dev,srch-dev,Azure AI Search,Standard S1 Unit,9.18,USD
+2026-10-30,sub-contoso-prod,rg-data-prod,adf-ingest-prod,Azure Data Factory v2,Orchestration Activity Run,38.38,USD
+2026-10-30,sub-contoso-prod,rg-data-prod,dbw-analytics-prod,Azure Databricks,Premium All-purpose Compute DBU,125.55,USD
+2026-10-30,sub-contoso-prod,rg-data-prod,st-lake-prod,Storage,Hot LRS Data Stored,46.96,USD
+2026-10-30,sub-contoso-prod,rg-platform,aks-platform,Azure Kubernetes Service,Standard Uptime SLA,243.67,USD
+2026-10-30,sub-contoso-prod,rg-platform,kv-platform,Key Vault,Operations,3.40,USD
+2026-10-30,sub-contoso-prod,rg-platform,log-platform,Log Analytics,Analytics Logs Data Ingestion,39.64,USD
+2026-10-30,sub-contoso-prod,rg-platform,vmss-aks-nodes,Virtual Machines,D4s v5,142.46,USD
+2026-10-30,sub-contoso-prod,rg-web-prod,app-web-prod,Azure App Service,P1v3 App Service Hours,67.15,USD
+2026-10-30,sub-contoso-prod,rg-web-prod,fd-web-prod,Azure Front Door,Data Transfer Out,20.71,USD
+2026-10-30,sub-contoso-prod,rg-web-prod,sql-web-prod,SQL Database,vCore,97.29,USD
+2026-10-31,sub-contoso-prod,rg-ai-dev,aoai-dev,Foundry Models,gpt-5.4-mini Input Tokens,16.26,USD
+2026-10-31,sub-contoso-prod,rg-ai-dev,srch-dev,Azure AI Search,Standard S1 Unit,9.05,USD
+2026-10-31,sub-contoso-prod,rg-data-prod,adf-ingest-prod,Azure Data Factory v2,Orchestration Activity Run,38.14,USD
+2026-10-31,sub-contoso-prod,rg-data-prod,dbw-analytics-prod,Azure Databricks,Premium All-purpose Compute DBU,151.48,USD
+2026-10-31,sub-contoso-prod,rg-data-prod,st-lake-prod,Storage,Hot LRS Data Stored,40.59,USD
+2026-10-31,sub-contoso-prod,rg-platform,aks-platform,Azure Kubernetes Service,Standard Uptime SLA,243.48,USD
+2026-10-31,sub-contoso-prod,rg-platform,kv-platform,Key Vault,Operations,3.96,USD
+2026-10-31,sub-contoso-prod,rg-platform,log-platform,Log Analytics,Analytics Logs Data Ingestion,39.41,USD
+2026-10-31,sub-contoso-prod,rg-platform,vmss-aks-nodes,Virtual Machines,D4s v5,168.38,USD
+2026-10-31,sub-contoso-prod,rg-web-prod,app-web-prod,Azure App Service,P1v3 App Service Hours,60.68,USD
+2026-10-31,sub-contoso-prod,rg-web-prod,fd-web-prod,Azure Front Door,Data Transfer Out,21.25,USD
+2026-10-31,sub-contoso-prod,rg-web-prod,sql-web-prod,SQL Database,vCore,77.49,USD
+2026-11-01,sub-contoso-prod,rg-ai-dev,aoai-dev,Foundry Models,gpt-5.4-mini Input Tokens,16.22,USD
+2026-11-01,sub-contoso-prod,rg-ai-dev,srch-dev,Azure AI Search,Standard S1 Unit,7.72,USD
+2026-11-01,sub-contoso-prod,rg-data-prod,adf-ingest-prod,Azure Data Factory v2,Orchestration Activity Run,29.84,USD
+2026-11-01,sub-contoso-prod,rg-data-prod,dbw-analytics-prod,Azure Databricks,Premium All-purpose Compute DBU,125.07,USD
+2026-11-01,sub-contoso-prod,rg-data-prod,st-lake-prod,Storage,Hot LRS Data Stored,45.90,USD
+2026-11-01,sub-contoso-prod,rg-platform,aks-platform,Azure Kubernetes Service,Standard Uptime SLA,247.26,USD
+2026-11-01,sub-contoso-prod,rg-platform,kv-platform,Key Vault,Operations,3.54,USD
+2026-11-01,sub-contoso-prod,rg-platform,log-platform,Log Analytics,Analytics Logs Data Ingestion,38.67,USD
+2026-11-01,sub-contoso-prod,rg-platform,vmss-aks-nodes,Virtual Machines,D4s v5,134.78,USD
+2026-11-01,sub-contoso-prod,rg-web-prod,app-web-prod,Azure App Service,P1v3 App Service Hours,67.34,USD
+2026-11-01,sub-contoso-prod,rg-web-prod,fd-web-prod,Azure Front Door,Data Transfer Out,23.91,USD
+2026-11-01,sub-contoso-prod,rg-web-prod,sql-web-prod,SQL Database,vCore,88.66,USD

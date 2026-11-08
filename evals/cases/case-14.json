@@ -1,0 +1,25 @@
+{
+  "analysis_start": "2026-10-26",
+  "analysis_end": "2026-11-01",
+  "week_total": 5939.86,
+  "anomalies": [
+    {
+      "resource": "aks-platform",
+      "resource_group": "rg-platform",
+      "date": "2026-10-28",
+      "type": "spike"
+    },
+    {
+      "resource": "dbw-analytics-prod",
+      "resource_group": "rg-data-prod",
+      "date": "2026-10-27",
+      "type": "spike"
+    },
+    {
+      "resource": "redis-cache-new",
+      "resource_group": "rg-web-prod",
+      "date": "2026-10-28",
+      "type": "new_resource"
+    }
+  ]
+}

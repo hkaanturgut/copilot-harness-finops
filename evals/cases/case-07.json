@@ -1,0 +1,19 @@
+{
+  "analysis_start": "2026-10-26",
+  "analysis_end": "2026-11-01",
+  "week_total": 5458.77,
+  "anomalies": [
+    {
+      "resource": "sql-web-prod",
+      "resource_group": "rg-web-prod",
+      "date": "2026-10-28",
+      "type": "spike"
+    },
+    {
+      "resource": "st-lake-prod",
+      "resource_group": "rg-data-prod",
+      "date": "2026-10-31",
+      "type": "step_change"
+    }
+  ]
+}

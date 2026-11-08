@@ -1,0 +1,13 @@
+{
+  "analysis_start": "2026-10-26",
+  "analysis_end": "2026-11-01",
+  "week_total": 5196.87,
+  "anomalies": [
+    {
+      "resource": "sql-web-prod",
+      "resource_group": "rg-web-prod",
+      "date": "2026-10-30",
+      "type": "spike"
+    }
+  ]
+}

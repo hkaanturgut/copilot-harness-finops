@@ -1,0 +1,13 @@
+{
+  "analysis_start": "2026-10-26",
+  "analysis_end": "2026-11-01",
+  "week_total": 5001.67,
+  "anomalies": [
+    {
+      "resource": "aks-platform",
+      "resource_group": "rg-platform",
+      "date": "2026-10-29",
+      "type": "spike"
+    }
+  ]
+}

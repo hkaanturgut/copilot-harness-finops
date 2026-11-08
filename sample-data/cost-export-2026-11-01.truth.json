@@ -1,0 +1,19 @@
+{
+  "analysis_start": "2026-10-26",
+  "analysis_end": "2026-11-01",
+  "week_total": 5453.98,
+  "anomalies": [
+    {
+      "resource": "adf-ingest-prod",
+      "resource_group": "rg-data-prod",
+      "date": "2026-10-29",
+      "type": "step_change"
+    },
+    {
+      "resource": "log-platform",
+      "resource_group": "rg-platform",
+      "date": "2026-10-29",
+      "type": "step_change"
+    }
+  ]
+}
