@@ -62,11 +62,11 @@ def _ask_once(client: FoundryClient, csv_path: Path, prompt: str) -> tuple[str, 
     text, files = response_text_and_files(response, excluded_file_ids={file_id})
     # Preview: a response can report `completed` before its final message is visible.
     # Re-read it a few times before giving up, and count how often that happens.
-    for _ in range(4):
+    for _ in range(12):  # up to ~90s
         if "```json" in text or "Network test" in prompt:
             break
         REFETCHES.append(response["id"])
-        time.sleep(5)
+        time.sleep(7.5)
         response = client.request(
             "GET",
             f"{client.agent_endpoint}/responses/{response['id']}?api-version=v1",

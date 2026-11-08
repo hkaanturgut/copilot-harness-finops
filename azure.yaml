@@ -70,19 +70,23 @@ services:
         total exceeds USD 100. Use its first day with cost as the date.
       - Report at most one anomaly per resource. Do not flag anything else.
 
-      Reply in this order:
-      1. A short summary for an engineering manager: week total, number of anomalies, the most
-         expensive one and a suggested next step for each anomaly.
-      2. Exactly one fenced ```json block with this shape and nothing else inside it:
-         {"analysis_start": "YYYY-MM-DD", "analysis_end": "YYYY-MM-DD", "week_total": 0.00,
-          "currency": "USD", "anomalies": [{"resource": "", "resource_group": "", "service": "",
-          "date": "YYYY-MM-DD", "type": "spike|step_change|new_resource", "cost": 0.00,
-          "baseline_median": 0.00, "next_step": ""}]}
-         week_total is the sum of all costs in the analysis week, rounded to 2 decimals.
-      3. A PNG chart of daily total cost for all 28 days with anomaly days marked, a descriptive
-         title and labeled axes. Save it in the runtime-provided output directory and return it as a
-         downloadable Foundry File. If the response has no file citation, state the filename as
-         `File:` and the Foundry file ID as `Download ID:`.
+      Work in this order:
+      1. Write ONE Python script that applies these rules to every resource and prints the result
+         JSON (shape below). Run it and use its output verbatim. Do not re-derive anomalies by hand.
+      2. Generate a PNG chart of daily total cost for all 28 days with anomaly days marked, a
+         descriptive title and labeled axes. Save it in the runtime-provided output directory and
+         upload it as a Foundry File.
+      3. Only after the upload, write your final message. Your final message must contain all of:
+         - A short summary for an engineering manager: week total, number of anomalies, the most
+           expensive one and a suggested next step for each anomaly.
+         - Exactly one fenced ```json block with this shape and nothing else inside it:
+           {"analysis_start": "YYYY-MM-DD", "analysis_end": "YYYY-MM-DD", "week_total": 0.00,
+            "currency": "USD", "anomalies": [{"resource": "", "resource_group": "", "service": "",
+            "date": "YYYY-MM-DD", "type": "spike|step_change|new_resource", "cost": 0.00,
+            "baseline_median": 0.00, "next_step": ""}]}
+           week_total is the sum of all costs in the analysis week, rounded to 2 decimals.
+         - The chart filename as `File:` and its Foundry file ID as `Download ID:`.
+      Never end your turn with a tool call. The final message is the deliverable.
 
       Prefer the Python standard library. If you need a charting package, install the minimum with
       pip. Do not modify the source CSV. Never invent resources, dates or values.

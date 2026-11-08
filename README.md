@@ -73,11 +73,29 @@ Deterministic on purpose, so the evals have a ground truth. Over 28 days of dail
 
 ## Results
 
-RESULTS_PLACEHOLDER
+Latest run (2026-11-08, agent v2, gpt-5.4-mini, 3 parallel workers): **PASS**. Full table in [`evals/results/latest.md`](evals/results/latest.md).
+
+| Metric | Result |
+|---|---|
+| Recall / precision | **1.00 / 1.00** (26 of 26 seeded anomalies, 0 false positives) |
+| Week total within 1% | 15/15 |
+| Chart returned | 15/15 |
+| Egress to example.com | HTTP 403 |
+| Median time per case | 58 s |
+
+Honest history: the three runs before this one failed. None of the failures were wrong detections. The causes were model rate limits, a response stuck `in_progress`, the final message arriving after `completed`, the chart upload swallowing the final answer, and my own client's token handling. Each one is a fix in this repo and a lesson below. One green run isn't proof of stability, so the gate keeps running in CI.
 
 ## Things I learned (preview, Nov 2026)
 
-LEARNINGS_PLACEHOLDER
+- **Egress decision spans do show up.** Each outbound request is a dependency span named `Network egress decision: Allow|Deny <METHOD> <host>`, which turns Audit into a simple KQL query.
+- **Default Deny blocks the harness's own telemetry** to App Insights until you allow the project's ingestion and live-metrics hosts. `scripts/postprovision.sh` reads them from the connection string.
+- **Shell calls are traced** as `execute_tool bash` spans next to the model calls and `session.provisioning` (about 130 ms at the median).
+- **The sandbox, measured from inside:** 1 vCPU, about 2.2 GiB RAM, 16 GB disk, Debian 12, root. That's about USD 0.125/hour alive after 2026-12-01.
+- **Don't end on a tool call.** If uploading the chart is the agent's last step, the final answer can be replaced by "The agent generated the following files, which are attached." Instruct it to upload first and answer last.
+- **`completed` can come before the final message.** Re-read the response for up to about 90 s before treating a missing answer as a failure.
+- **Plan capacity for evals.** 50K TPM rate-limited three parallel agent runs. `azd deploy` doesn't change an existing deployment's capacity; `az cognitiveservices account deployment create --sku-capacity` does.
+- **Put the logic in code the agent runs**, not in the agent's head. Asking for one script that applies the rule and copying its output verbatim removed the misses.
+- **Still unverified:** private networking with the harness, a region-bound model deployment (this uses GlobalStandard), and the sandbox idle timeout.
 
 ## Credits
 

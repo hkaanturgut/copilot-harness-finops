@@ -6,6 +6,7 @@ import os
 import re
 import subprocess
 import sys
+import threading
 import time
 from pathlib import Path
 from typing import Any
@@ -53,14 +54,30 @@ class FoundryClient:
         self.project_endpoint = validated_project_endpoint(project_endpoint)
         self.agent_name = AGENT_NAME
         self.agent_endpoint = f"{self.project_endpoint}/agents/{quote(self.agent_name)}/endpoint/protocols/openai"
-        self.credential = AzureCliCredential()
+        self.credential = AzureCliCredential(process_timeout=60)
+        self._token = None
+        self._token_lock = threading.Lock()
+
+    def token(self) -> str:
+        # One `az` call per ~hour instead of one per request; safe across threads.
+        with self._token_lock:
+            if self._token is None or self._token.expires_on - time.time() < 300:
+                for attempt in range(3):  # `az` occasionally hangs; retry
+                    try:
+                        self._token = self.credential.get_token("https://ai.azure.com/.default")
+                        break
+                    except Exception:
+                        if attempt == 2:
+                            raise
+                        time.sleep(5)
+            return self._token.token
 
     @property
     def feature_headers(self) -> dict[str, str]:
         return {"Foundry-Features": "MicrosoftCopilot=V1Preview"}
 
     def request(self, method: str, url: str, **kwargs: Any) -> requests.Response:
-        token = self.credential.get_token("https://ai.azure.com/.default").token
+        token = self.token()
         headers = kwargs.pop("headers", {})
         headers["Authorization"] = f"Bearer {token}"
         timeout = kwargs.pop("timeout", 60)
