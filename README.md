@@ -62,6 +62,8 @@ python evals/run_evals.py       # writes evals/results/latest.md
 
 CI setup (one time, creates a user-assigned managed identity with a GitHub federated credential; no app-registration rights needed): `./scripts/setup-github-oidc.sh`.
 
+Terminal demo clips: `vhs video/tapes/01-egress.tape` (also `07-demo`, `09-evals`), output in `video/out/`. Needs [vhs](https://github.com/charmbracelet/vhs).
+
 Tear down: `azd down --purge --force`.
 
 ## Detection rule
