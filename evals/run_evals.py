@@ -36,15 +36,16 @@ EGRESS_PROMPT = (
 )
 
 
-def ask(client: FoundryClient, csv_path: Path, prompt: str, attempts: int = 4) -> tuple[str, list[dict], float]:
+def ask(client: FoundryClient, csv_path: Path, prompt: str, attempts: int = 3) -> tuple[str, list[dict], float]:
     """One fresh conversation per call. Retries model rate limits with backoff."""
     for attempt in range(attempts):
         try:
             return _ask_once(client, csv_path, prompt)
         except TimeoutError:
-            # Preview: a response occasionally stays in_progress. Retry in a new conversation.
-            if attempt == attempts - 1:
+            # Preview: a response occasionally stays in_progress. Retry once in a new conversation.
+            if attempt >= 1:
                 raise
+            print(f"[{csv_path.stem}] response stuck in_progress, retrying", file=sys.stderr, flush=True)
         except RuntimeError as exc:
             if "rate_limit" not in str(exc) or attempt == attempts - 1:
                 raise
@@ -87,6 +88,13 @@ def parse_json_block(text: str) -> dict | None:
 
 
 def run_case(client: FoundryClient, name: str) -> dict:
+    result = _run_case(client, name)
+    status = result.get("error") or f"tp={result['tp']} fp={result['fp']} fn={result['fn']} {result.get('seconds')}s"
+    print(f"[{name}] {status}", file=sys.stderr, flush=True)
+    return result
+
+
+def _run_case(client: FoundryClient, name: str) -> dict:
     truth = json.loads((CASES / f"{name}.json").read_text())
     result: dict = {"case": name, "expected": len(truth["anomalies"])}
     try:
@@ -134,7 +142,7 @@ def run_egress(client: FoundryClient) -> dict:
 
 
 def main() -> int:
-    os.environ.setdefault("RESPONSE_TIMEOUT_SECONDS", "480")
+    os.environ.setdefault("RESPONSE_TIMEOUT_SECONDS", "300")
     parser = argparse.ArgumentParser()
     parser.add_argument("--workers", type=int, default=3)
     parser.add_argument("--cases", default="", help="comma-separated case names; default all")

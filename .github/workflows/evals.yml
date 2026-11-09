@@ -18,7 +18,7 @@ concurrency:
 jobs:
   evals:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
     env:
       FOUNDRY_PROJECT_ENDPOINT: ${{ vars.FOUNDRY_PROJECT_ENDPOINT }}
       AGENT_NAME: finops-analyst
@@ -39,6 +39,8 @@ jobs:
           subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
 
       - name: Run evals
+        env:
+          PYTHONUNBUFFERED: "1"
         run: python evals/run_evals.py --workers 3
 
       - name: Upload results
