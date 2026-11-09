@@ -5,24 +5,27 @@
   "tp": 26,
   "fp": 0,
   "fn": 0,
+  "answered": 15,
+  "total_cases": 15,
   "checks": {
+    "answered >= 80% of cases (15/15)": true,
     "recall >= 0.9": true,
     "precision >= 0.8": true,
-    "week_total within 1% on every case": true,
-    "chart on every case": true,
+    "week_total within 1% on every answered case": true,
+    "chart on every answered case": true,
     "egress to example.com blocked": true
   },
   "egress": {
     "blocked": true,
     "http_code": "403",
     "output": "```text\n403 exit=0\n```",
-    "seconds": 9.7
+    "seconds": 11.4
   },
   "cases": [
     {
       "case": "case-01",
       "expected": 0,
-      "seconds": 60.1,
+      "seconds": 72.5,
       "json_ok": true,
       "tp": 0,
       "fp": 0,
@@ -38,7 +41,7 @@
     {
       "case": "case-02",
       "expected": 0,
-      "seconds": 58.3,
+      "seconds": 79.0,
       "json_ok": true,
       "tp": 0,
       "fp": 0,
@@ -54,7 +57,7 @@
     {
       "case": "case-03",
       "expected": 1,
-      "seconds": 59.4,
+      "seconds": 60.2,
       "json_ok": true,
       "tp": 1,
       "fp": 0,
@@ -70,7 +73,7 @@
     {
       "case": "case-04",
       "expected": 1,
-      "seconds": 44.2,
+      "seconds": 69.2,
       "json_ok": true,
       "tp": 1,
       "fp": 0,
@@ -86,7 +89,7 @@
     {
       "case": "case-05",
       "expected": 1,
-      "seconds": 44.2,
+      "seconds": 58.1,
       "json_ok": true,
       "tp": 1,
       "fp": 0,
@@ -102,7 +105,7 @@
     {
       "case": "case-06",
       "expected": 1,
-      "seconds": 54.0,
+      "seconds": 76.6,
       "json_ok": true,
       "tp": 1,
       "fp": 0,
@@ -118,7 +121,7 @@
     {
       "case": "case-07",
       "expected": 2,
-      "seconds": 52.9,
+      "seconds": 109.0,
       "json_ok": true,
       "tp": 2,
       "fp": 0,
@@ -134,7 +137,7 @@
     {
       "case": "case-08",
       "expected": 2,
-      "seconds": 53.5,
+      "seconds": 63.5,
       "json_ok": true,
       "tp": 2,
       "fp": 0,
@@ -150,7 +153,7 @@
     {
       "case": "case-09",
       "expected": 2,
-      "seconds": 53.8,
+      "seconds": 56.7,
       "json_ok": true,
       "tp": 2,
       "fp": 0,
@@ -166,7 +169,7 @@
     {
       "case": "case-10",
       "expected": 2,
-      "seconds": 57.8,
+      "seconds": 100.7,
       "json_ok": true,
       "tp": 2,
       "fp": 0,
@@ -182,7 +185,7 @@
     {
       "case": "case-11",
       "expected": 2,
-      "seconds": 69.9,
+      "seconds": 97.9,
       "json_ok": true,
       "tp": 2,
       "fp": 0,
@@ -198,7 +201,7 @@
     {
       "case": "case-12",
       "expected": 3,
-      "seconds": 62.7,
+      "seconds": 56.4,
       "json_ok": true,
       "tp": 3,
       "fp": 0,
@@ -214,7 +217,7 @@
     {
       "case": "case-13",
       "expected": 3,
-      "seconds": 64.9,
+      "seconds": 76.9,
       "json_ok": true,
       "tp": 3,
       "fp": 0,
@@ -230,7 +233,7 @@
     {
       "case": "case-14",
       "expected": 3,
-      "seconds": 62.7,
+      "seconds": 66.9,
       "json_ok": true,
       "tp": 3,
       "fp": 0,
@@ -246,7 +249,7 @@
     {
       "case": "case-15",
       "expected": 3,
-      "seconds": 56.2,
+      "seconds": 75.2,
       "json_ok": true,
       "tp": 3,
       "fp": 0,
@@ -261,5 +264,5 @@
     }
   ],
   "late_message_refetches": 0,
-  "median_seconds": 57.8
+  "median_seconds": 72.5
 }

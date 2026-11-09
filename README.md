@@ -75,17 +75,20 @@ Deterministic on purpose, so the evals have a ground truth. Over 28 days of dail
 
 ## Results
 
-Latest run (2026-11-08, agent v2, gpt-5.4-mini, 3 parallel workers): **PASS**. Full table in [`evals/results/latest.md`](evals/results/latest.md).
+Latest run: GitHub Actions, 2026-11-09, agent v3, gpt-5.4-mini, 3 parallel workers: **PASS** ([run](https://github.com/hkaanturgut/copilot-harness-finops/actions/runs/42562783700)). Full table in [`evals/results/latest.md`](evals/results/latest.md).
 
 | Metric | Result |
 |---|---|
+| Cases answered | 15/15 (2 needed a retry after the platform hung) |
 | Recall / precision | **1.00 / 1.00** (26 of 26 seeded anomalies, 0 false positives) |
 | Week total within 1% | 15/15 |
 | Chart returned | 15/15 |
 | Egress to example.com | HTTP 403 |
-| Median time per case | 58 s |
+| Median time per case | 72.5 s |
 
-Honest history: the three runs before this one failed. None of the failures were wrong detections. The causes were model rate limits, a response stuck `in_progress`, the final message arriving after `completed`, the chart upload swallowing the final answer, and my own client's token handling. Each one is a fix in this repo and a lesson below. One green run isn't proof of stability, so the gate keeps running in CI.
+How the gate scores: quality (recall, precision, totals, charts) is measured on cases that returned an answer. Cases where the platform never answered, even after 3 tries of 180 s, count against a separate **answered ≥ 80%** check. A platform hang is an availability problem, and mixing it into recall hid the fact that every answered case was right.
+
+Honest history: the first local pass came after three failing runs, and CI then failed four more times before this pass. Only two of those failures were the agent's fault: one missed spike (fixed by making it run one script) and one JSON block that lost its closing brace when the model retyped it (fixed by having it paste `result.json` unchanged). The rest were rate limits, a hanging upload tool, late final messages, my client's token handling, and CI login. Each one is a fix in this repo and a lesson below.
 
 ## Things I learned (preview, Nov 2026)
 
@@ -98,6 +101,10 @@ Honest history: the three runs before this one failed. None of the failures were
 - **Plan capacity for evals.** 50K TPM rate-limited three parallel agent runs. `azd deploy` doesn't change an existing deployment's capacity; `az cognitiveservices account deployment create --sku-capacity` does.
 - **Put the logic in code the agent runs**, not in the agent's head. Asking for one script that applies the rule and copying its output verbatim removed the misses.
 - **GitHub OIDC subjects include IDs now**: `repo:owner@<id>/name@<id>:ref:refs/heads/main`. A federated credential with the plain `repo:owner/name:...` subject fails with AADSTS700213. The setup script reads the IDs from the GitHub API.
+- **The upload tool hangs about a quarter of the time.** Over 13 hours, `upload_file_from_workspace_to_foundry_project` took over 60 s in 41 of 155 calls (median 2 s, p90 617 s). Each one sits behind a `permission` span of the same length, and the response stays `in_progress`. During the preview the service manages harness tool approvals, so you can't configure this. Time out at about 3 minutes and retry in a new conversation.
+- **Have the agent paste files, not retype them.** A correct answer failed because the model dropped the JSON's closing brace. The script now writes `result.json` and the agent pastes a `json.dumps` of it.
+- **`az monitor app-insights query` defaults to the last hour.** Pass `--offset 3d` (or similar), or your KQL `ago(2d)` silently covers one hour.
+- **Platform traffic isn't in your allow list.** Calls to your own Foundry account are allowed regardless (documented: "Foundry preserves the required platform connectivity"). Calls to `agent365.svc.cloud.microsoft` were denied 1418 times with no visible effect on the agent.
 - **Still unverified:** private networking with the harness, a region-bound model deployment (this uses GlobalStandard), and the sandbox idle timeout.
 
 ## Credits
