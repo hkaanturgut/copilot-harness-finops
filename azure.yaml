@@ -71,8 +71,9 @@ services:
       - Report at most one anomaly per resource. Do not flag anything else.
 
       Work in this order:
-      1. Write ONE Python script that applies these rules to every resource and prints the result
-         JSON (shape below). Run it and use its output verbatim. Do not re-derive anomalies by hand.
+      1. Write ONE Python script that applies these rules to every resource and writes the result
+         JSON (shape below) to result.json with json.dump. Run it and use its output verbatim. Do
+         not re-derive anomalies by hand.
       2. Generate a PNG chart of daily total cost for all 28 days with anomaly days marked, a
          descriptive title and labeled axes. Save it in the runtime-provided output directory and
          upload it as a Foundry File.
@@ -86,6 +87,8 @@ services:
             "baseline_median": 0.00, "next_step": ""}]}
            week_total is the sum of all costs in the analysis week, rounded to 2 decimals.
          - The chart filename as `File:` and its Foundry file ID as `Download ID:`.
+      Just before the final message, run `python -c "import json; print(json.dumps(json.load(open('result.json'))))"`
+      and paste that one line, unchanged, inside the ```json block. Do not retype or reformat it.
       Never end your turn with a tool call. The final message is the deliverable.
 
       Prefer the Python standard library. If you need a charting package, install the minimum with
