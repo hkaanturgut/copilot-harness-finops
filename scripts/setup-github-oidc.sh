@@ -21,7 +21,11 @@ az identity create -g "$rg" -n "$name" -l "$loc" -o none --only-show-errors
 client_id="$(az identity show -g "$rg" -n "$name" --query clientId -o tsv)"
 principal_id="$(az identity show -g "$rg" -n "$name" --query principalId -o tsv)"
 
-for pair in "main:repo:${repo}:ref:refs/heads/main" "pr:repo:${repo}:pull_request"; do
+# GitHub's OIDC subject embeds the owner and repo IDs, e.g.
+# repo:owner@123/name@456:ref:refs/heads/main. Read them so the subject matches.
+sub_repo="$(gh api "repos/${repo}" --jq '"\(.owner.login)@\(.owner.id)/\(.name)@\(.id)"')"
+
+for pair in "main:repo:${sub_repo}:ref:refs/heads/main" "pr:repo:${sub_repo}:pull_request"; do
   az identity federated-credential create -g "$rg" --identity-name "$name" -n "gh-${pair%%:*}" \
     --issuer https://token.actions.githubusercontent.com --subject "${pair#*:}" \
     --audiences api://AzureADTokenExchange -o none --only-show-errors

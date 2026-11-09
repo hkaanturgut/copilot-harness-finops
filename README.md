@@ -95,6 +95,7 @@ Honest history: the three runs before this one failed. None of the failures were
 - **`completed` can come before the final message.** Re-read the response for up to about 90 s before treating a missing answer as a failure.
 - **Plan capacity for evals.** 50K TPM rate-limited three parallel agent runs. `azd deploy` doesn't change an existing deployment's capacity; `az cognitiveservices account deployment create --sku-capacity` does.
 - **Put the logic in code the agent runs**, not in the agent's head. Asking for one script that applies the rule and copying its output verbatim removed the misses.
+- **GitHub OIDC subjects include IDs now**: `repo:owner@<id>/name@<id>:ref:refs/heads/main`. A federated credential with the plain `repo:owner/name:...` subject fails with AADSTS700213. The setup script reads the IDs from the GitHub API.
 - **Still unverified:** private networking with the harness, a region-bound model deployment (this uses GlobalStandard), and the sandbox idle timeout.
 
 ## Credits
