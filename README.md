@@ -62,7 +62,9 @@ python evals/run_evals.py       # writes evals/results/latest.md
 
 CI setup (one time, creates a user-assigned managed identity with a GitHub federated credential; no app-registration rights needed): `./scripts/setup-github-oidc.sh`.
 
-Terminal demo clips: `vhs video/tapes/01-egress.tape` (also `07-demo`, `09-evals`), output in `video/out/`. Needs [vhs](https://github.com/charmbracelet/vhs).
+Interactive walkthrough: open [`demo/index.html`](demo/index.html) in a browser (no server needed). Tabs for the architecture, `azure.yaml`, egress rules, the anomaly rule, all eval cases, what broke and cost.
+
+Terminal demo clips: `vhs video/tapes/01-egress.tape` (also `04-azure-yaml`, `05-hooks`, `07-demo`, `08-traces`, `09-evals`), output in `video/out/`. Needs [vhs](https://github.com/charmbracelet/vhs) and `pip install pygments`. `video/kql.sh` queries App Insights with the account name masked.
 
 Tear down: `azd down --purge --force`.
 
