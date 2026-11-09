@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Governed FinOps agent on the Copilot harness: interactive walkthrough</title>
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1d1b;--muted:#5d5d58;--card:#ffffff;--line:#dedbd2;--accent:#1f5fbf;--ok:#1d7a3a;--bad:#b3261e;--warn:#8a5a00;--code:#f3f1ec;--hl:#fff3c4}
+@media (prefers-color-scheme:dark){:root{--bg:#141413;--fg:#ecebe6;--muted:#a8a69e;--card:#1e1e1c;--line:#3a3934;--accent:#7fb0ff;--ok:#6fcf8c;--bad:#ff8a80;--warn:#f0c060;--code:#262624;--hl:#3d3520}}
+*{box-sizing:border-box}
+a{color:var(--accent)}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
+header{padding:28px 20px 8px;max-width:1080px;margin:auto}
+header h1{margin:0 0 6px;font-size:1.6rem;line-height:1.25}
+header p{margin:0;color:var(--muted)}
+nav{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+nav .tabs{display:flex;gap:4px;overflow-x:auto;max-width:1080px;margin:auto;padding:8px 20px}
+nav button{flex:0 0 auto;border:1px solid var(--line);background:var(--card);color:var(--fg);padding:7px 12px;border-radius:999px;font:inherit;font-size:.9rem;cursor:pointer}
+nav button[aria-selected="true"]{background:var(--accent);border-color:var(--accent);color:var(--bg)}
+nav button:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,.yl:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+main{max-width:1080px;margin:auto;padding:20px}
+section[hidden]{display:none}
+h2{font-size:1.35rem;margin:.2em 0 .6em}
+h3{font-size:1.05rem;margin:1.4em 0 .5em}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px;margin:12px 0}
+.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.stat{font-size:1.6rem;font-weight:650}
+.muted{color:var(--muted)}
+.ok{color:var(--ok)}.bad{color:var(--bad)}.warn{color:var(--warn)}
+code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86rem}
+pre{background:var(--code);border:1px solid var(--line);border-radius:8px;padding:12px;overflow:auto;white-space:pre-wrap;word-break:break-word}
+table{border-collapse:collapse;width:100%;font-size:.92rem}
+th,td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+th button{all:unset;cursor:pointer;font-weight:650}
+th button:focus-visible{outline:3px solid var(--accent)}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+img{max-width:100%;height:auto;border:1px solid var(--line);border-radius:8px}
+.pager{display:flex;justify-content:space-between;margin-top:24px}
+.pager button,.btn{border:1px solid var(--line);background:var(--card);color:var(--fg);padding:8px 14px;border-radius:8px;font:inherit;cursor:pointer}
+.yaml{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:12px}
+@media (max-width:800px){.yaml{grid-template-columns:1fr}}
+.ycode{background:var(--code);border:1px solid var(--line);border-radius:8px;padding:8px 0;max-height:640px;overflow:auto;font-family:ui-monospace,Menlo,monospace;font-size:.8rem}
+.yl{display:block;white-space:pre-wrap;padding:0 10px 0 44px;text-indent:-34px;border-left:3px solid transparent}
+.yl .n{display:inline-block;width:30px;color:var(--muted);text-align:right;margin-right:4px;text-indent:0}
+.yl.ann{cursor:pointer;border-left-color:var(--accent)}
+.yl.ann:hover,.yl.sel{background:var(--hl)}
+.explain{position:sticky;top:64px;align-self:start}
+.pill{display:inline-block;padding:1px 8px;border-radius:999px;font-size:.8rem;border:1px solid currentColor}
+label{display:block;font-weight:600;margin:8px 0 4px}
+input[type=text],input[type=number],select{font:inherit;padding:6px 8px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--fg);width:100%}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:end}
+.row>*{flex:1 1 120px}
+.days{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.days input{width:100%}
+.verdict{font-size:1.1rem;font-weight:650;padding:10px 12px;border-radius:8px;border:2px solid currentColor;margin-top:12px}
+.tl{list-style:none;padding:0;margin:0;border-left:3px solid var(--line)}
+.tl li{position:relative;padding:0 0 14px 18px}
+.tl li::before{content:"";position:absolute;left:-8px;top:6px;width:13px;height:13px;border-radius:50%;background:var(--card);border:3px solid var(--muted)}
+.tl li.model::before{border-color:var(--bad)}
+.tl li.ci::before{border-color:var(--accent)}
+.tl details summary{cursor:pointer;font-weight:600}
+.bar{height:14px;background:var(--accent);border-radius:3px}
+svg text{fill:var(--fg);font:13px system-ui,sans-serif}
+svg .box{fill:var(--card);stroke:var(--line);stroke-width:1.5}
+svg .box.hot{stroke:var(--accent);stroke-width:2.5}
+svg .arrow{stroke:var(--muted);stroke-width:1.5;fill:none;marker-end:url(#ah)}
+svg .deny{stroke:var(--bad);stroke-dasharray:5 4}
+svg g.node{cursor:pointer}
+svg g.node:focus-visible rect{stroke:var(--accent);stroke-width:3}
+.note{font-size:.88rem;color:var(--muted)}
+</style>
+</head>
+<body>
+<header>
+  <h1>Governed FinOps agent on the Microsoft Copilot harness</h1>
+  <p>Interactive walkthrough of <a href="https://github.com/hkaanturgut/copilot-harness-finops">hkaanturgut/copilot-harness-finops</a>: a Foundry Agent Service agent (public preview) that reviews a weekly Azure cost export with deny-by-default egress and an eval gate in CI. Every number here comes from the repo, its CI run, or the build log. Account names are masked as <code>&lt;account&gt;</code>.</p>
+</header>
+<nav aria-label="Walkthrough steps"><div class="tabs" role="tablist" id="tabs"></div></nav>
+<main>
+
+<section id="s-scenario" data-title="1. Scenario" role="tabpanel">
+  <h2>1. The scenario and the rules</h2>
+  <p>A platform team wants its weekly Azure cost export reviewed: which resources jumped, by how much, and what to look at next. An agent can do it, as long as it can't wander.</p>
+  <div class="grid">
+    <div class="card"><div class="stat">No open internet</div><p>Egress deny-by-default through a guardrail (RAI) policy. Only PyPI and the project's own App Insights hosts are allowed. Everything else gets HTTP 403.</p></div>
+    <div class="card"><div class="stat">No keys</div><p>Entra only. The agent's own identity gets <b>Foundry User</b> after deploy. CI signs in with GitHub OIDC to a managed identity with that same narrow role: it can run evals, not deploy.</p></div>
+    <div class="card"><div class="stat">Least privilege</div><p>Three tools: file read, file write, shell. Web and subagents are off. A budget alert on the resource group.</p></div>
+    <div class="card"><div class="stat">Proof first</div><p>15 synthetic cost exports with seeded anomalies. CI fails on recall &lt; 0.90, precision &lt; 0.80, a week total off by &gt; 1%, a missing chart, or egress not blocked.</p></div>
+  </div>
+  <div class="card">
+    <h3 style="margin-top:0">Result in CI</h3>
+    <div class="grid" id="headline"></div>
+    <p class="note">From <a href="https://github.com/hkaanturgut/copilot-harness-finops/actions/runs/42562783700">CI run 42562783700</a>, agent version 3. 2 cases needed a retry after the platform hung.</p>
+  </div>
+</section>
+
+<section id="s-arch" data-title="2. Architecture" role="tabpanel" hidden>
+  <h2>2. Architecture</h2>
+  <p>Select a box to see what it does and where it's defined.</p>
+  <div class="card">
+  <svg viewBox="0 0 960 430" role="img" aria-labelledby="archT" width="100%">
+    <title id="archT">azd deploys a Foundry project with a model and a Copilot harness agent; the agent's sandbox goes through an egress policy; traces go to App Insights; GitHub Actions signs in with OIDC to run evals.</title>
+    <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="currentColor" style="color:var(--muted)"/></marker></defs>
+    <g class="node" tabindex="0" data-k="azd"><rect class="box" x="20" y="30" width="170" height="70" rx="8"/><text x="105" y="60" text-anchor="middle" font-weight="600">azd up</text><text x="105" y="80" text-anchor="middle">azure.yaml + hooks</text></g>
+    <g class="node" tabindex="0" data-k="project"><rect class="box" x="250" y="20" width="420" height="250" rx="10"/><text x="265" y="44" font-weight="600">Foundry project (&lt;account&gt;)</text></g>
+    <g class="node" tabindex="0" data-k="model"><rect class="box" x="270" y="60" width="160" height="60" rx="8"/><text x="350" y="86" text-anchor="middle" font-weight="600">gpt-5.4-mini</text><text x="350" y="106" text-anchor="middle">GlobalStandard, 300K TPM</text></g>
+    <g class="node" tabindex="0" data-k="agent"><rect class="box" x="450" y="60" width="200" height="90" rx="8"/><text x="550" y="84" text-anchor="middle" font-weight="600">finops-analyst agent</text><text x="550" y="104" text-anchor="middle">microsoft_copilot_preview</text><text x="550" y="124" text-anchor="middle">read · write · shell</text></g>
+    <g class="node" tabindex="0" data-k="sandbox"><rect class="box" x="450" y="170" width="200" height="80" rx="8"/><text x="550" y="198" text-anchor="middle" font-weight="600">Sandbox</text><text x="550" y="218" text-anchor="middle">1 vCPU · ~2.2 GiB · Debian 12</text><text x="550" y="236" text-anchor="middle">python, pip, curl</text></g>
+    <g class="node" tabindex="0" data-k="egress"><rect class="box" x="720" y="150" width="220" height="110" rx="8"/><text x="830" y="176" text-anchor="middle" font-weight="600">Egress policy</text><text x="830" y="196" text-anchor="middle">default: Deny</text><text x="830" y="216" text-anchor="middle">allow pypi + files.pythonhosted</text><text x="830" y="236" text-anchor="middle">allow own App Insights hosts</text></g>
+    <g class="node" tabindex="0" data-k="appi"><rect class="box" x="720" y="30" width="220" height="80" rx="8"/><text x="830" y="60" text-anchor="middle" font-weight="600">App Insights</text><text x="830" y="80" text-anchor="middle">traces, one span per</text><text x="830" y="96" text-anchor="middle">egress decision</text></g>
+    <g class="node" tabindex="0" data-k="gha"><rect class="box" x="20" y="300" width="220" height="100" rx="8"/><text x="130" y="328" text-anchor="middle" font-weight="600">GitHub Actions</text><text x="130" y="348" text-anchor="middle">Agent evals workflow</text><text x="130" y="368" text-anchor="middle">OIDC, no secrets</text></g>
+    <g class="node" tabindex="0" data-k="mi"><rect class="box" x="290" y="310" width="230" height="80" rx="8"/><text x="405" y="338" text-anchor="middle" font-weight="600">Managed identity</text><text x="405" y="358" text-anchor="middle">federated credentials</text><text x="405" y="376" text-anchor="middle">role: Foundry User</text></g>
+    <g class="node" tabindex="0" data-k="internet"><rect class="box" x="720" y="300" width="220" height="70" rx="8"/><text x="830" y="328" text-anchor="middle" font-weight="600">Internet</text><text x="830" y="348" text-anchor="middle">example.com → 403</text></g>
+    <path class="arrow" d="M190,65 L250,65"/>
+    <path class="arrow" d="M430,90 L450,90"/>
+    <path class="arrow" d="M550,150 L550,170"/>
+    <path class="arrow" d="M650,210 L720,205"/>
+    <path class="arrow" d="M650,95 L720,70"/>
+    <path class="arrow deny" d="M830,260 L830,300"/>
+    <path class="arrow" d="M240,350 L290,350"/>
+    <path class="arrow" d="M405,310 L405,272"/>
+  </svg>
+  </div>
+  <div class="card" id="archInfo" aria-live="polite"></div>
+</section>
+
+<section id="s-yaml" data-title="3. azure.yaml" role="tabpanel" hidden>
+  <h2>3. The whole agent is one file</h2>
+  <p>Highlighted lines have notes. Select one (click, or Tab then Enter).</p>
+  <div class="yaml">
+    <div class="ycode" id="ycode" aria-label="azure.yaml"></div>
+    <div class="card explain" id="yexplain" aria-live="polite"><b>azure.yaml</b><p class="muted">Pick a highlighted line.</p></div>
+  </div>
+</section>
+
+<section id="s-egress" data-title="4. Egress" role="tabpanel" hidden>
+  <h2>4. Egress: deny by default</h2>
+  <p>The <code>postprovision</code> hook writes an RAI policy with <code>egressPolicy.defaultAction: Deny</code> and four FQDN allow rules. The ingestion and live-metrics hosts are read from the App Insights connection string.</p>
+  <table><thead><tr><th>Rule</th><th>Host</th><th>Action</th></tr></thead><tbody>
+    <tr><td>allow-pypi</td><td><code>pypi.org</code></td><td class="ok">Allow</td></tr>
+    <tr><td>allow-pypi-files</td><td><code>files.pythonhosted.org</code></td><td class="ok">Allow</td></tr>
+    <tr><td>allow-appinsights-ingest</td><td><code>canadacentral-1.in.applicationinsights.azure.com</code></td><td class="ok">Allow</td></tr>
+    <tr><td>allow-appinsights-live</td><td><code>canadacentral.livediagnostics.monitor.azure.com</code></td><td class="ok">Allow</td></tr>
+    <tr><td><i>default</i></td><td>everything else</td><td class="bad">Deny (HTTP 403)</td></tr>
+  </tbody></table>
+  <div class="card">
+    <h3 style="margin-top:0">Try a host</h3>
+    <p class="note"><b>Simulation.</b> This page applies the rules above in your browser; it does not call Azure. Real runs from the agent's shell: <code>example.com</code> returned 403 and <code>pypi.org</code> returned 200.</p>
+    <div class="row"><div><label for="host">Hostname</label><input id="host" type="text" value="example.com" autocomplete="off" spellcheck="false"></div>
+    <div style="flex:0 0 auto"><button class="btn" id="hostGo">Check</button></div></div>
+    <div class="row" style="margin-top:6px" id="hostPresets"></div>
+    <div id="hostOut" aria-live="polite"></div>
+  </div>
+  <h3>What App Insights recorded (about 13 hours)</h3>
+  <p>Every allow and deny decision is a span named <code>Network egress decision: Allow|Deny &lt;METHOD&gt; &lt;host&gt;</code>. Filter:
+    <select id="egFilter" style="width:auto"><option value="all">All</option><option value="Allow">Allowed</option><option value="Deny">Denied</option></select></p>
+  <table id="egTable"><thead><tr><th>Decision</th><th>Method</th><th>Host</th><th class="num">Requests</th><th style="width:30%"><span class="sr">Share</span></th></tr></thead><tbody></tbody></table>
+  <ul class="note">
+    <li>Denied App Insights rows are from before the project's own telemetry hosts were allowed.</li>
+    <li><code>&lt;account&gt;.services.ai.azure.com</code> has no rule but is allowed: documented platform connectivity ("Foundry preserves the required platform connectivity that the harness needs to operate"). It's how the chart gets uploaded.</li>
+    <li><code>agent365.svc.cloud.microsoft</code>: 1418 denied, nothing in the agent broke. Not found in the docs.</li>
+    <li><code>westus-0</code> ingestion and <code>settings.sdk.monitor.azure.com</code> aren't this project's hosts.</li>
+  </ul>
+  <img src="assets/egress-403.png" alt="The agent runs curl from its sandbox: 403 for example.com, 200 for pypi.org" loading="lazy">
+</section>
+
+<section id="s-rule" data-title="5. Anomaly rule" role="tabpanel" hidden>
+  <h2>5. Making "anomaly" testable</h2>
+  <div class="card">
+    <p><b>Spike / step change:</b> flag on the first analysis-week day where cost is <b>more than 2×</b> the baseline median <b>and at least USD 25 above it</b>. <code>step_change</code> if it stays above that threshold every remaining day, otherwise <code>spike</code>.<br>
+    <b>New resource:</b> no cost in the baseline and an analysis-week total <b>over USD 100</b>.<br>
+    Baseline = the 21 days before the analysis week (missing days count as 0). At most one anomaly per resource.</p>
+  </div>
+  <div class="card">
+    <h3 style="margin-top:0">Try the rule</h3>
+    <p class="note">Enter your own numbers (the defaults are example values, not eval data). This runs the same rule in your browser.</p>
+    <div class="row">
+      <div><label for="med">Baseline median (USD/day)</label><input id="med" type="number" min="0" step="0.01" value="86.88"></div>
+      <div><label for="isNew"><input id="isNew" type="checkbox"> No cost in baseline (new resource)</label></div>
+    </div>
+    <label>Analysis week daily cost (USD), Mon → Sun</label>
+    <div class="days" id="days"></div>
+    <div id="ruleOut" aria-live="polite"></div>
+  </div>
+  <h3>A real answer: eval case-08 (CI run)</h3>
+  <p class="muted">Truth for case-08: <code>sql-web-prod</code> step change on 2026-10-27, <code>vmss-aks-nodes</code> spike on 2026-10-31, week total 6671.06. The agent matched both, with the exact total.</p>
+  <div class="card" id="answer"></div>
+  <h3>The chart (sample week)</h3>
+  <img src="assets/weekly-cost-anomalies.png" alt="Agent's chart: daily total cost over 28 days, jumping on 29 October where it marks 2 anomalies" loading="lazy">
+  <p class="note">Sample export truth: <code>adf-ingest-prod</code> and <code>log-platform</code>, both step changes on 2026-10-29, week total 5453.98.</p>
+</section>
+
+<section id="s-evals" data-title="6. Evals" role="tabpanel" hidden>
+  <h2>6. The eval gate</h2>
+  <div class="grid" id="checks"></div>
+  <p>Quality (recall, precision, totals, charts) is scored on cases that answered. Cases where the platform never answered after 3 tries of 180 s count against the separate <b>answered ≥ 80%</b> check.</p>
+  <div class="row"><div><label for="caseFilter">Show</label><select id="caseFilter"><option value="all">All 15 cases</option><option value="0">0 seeded anomalies</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></div><div></div><div></div></div>
+  <table id="caseTable"><thead><tr>
+    <th><button data-s="case">Case</button></th><th class="num"><button data-s="expected">Expected</button></th><th class="num"><button data-s="tp">TP</button></th><th class="num"><button data-s="fp">FP</button></th><th class="num"><button data-s="fn">FN</button></th><th class="num"><button data-s="week_total">Week total</button></th><th>Total ok</th><th>Chart</th><th class="num"><button data-s="seconds">Seconds</button></th><th style="width:16%">Time</th>
+  </tr></thead><tbody></tbody></table>
+  <p><a href="https://github.com/hkaanturgut/copilot-harness-finops/actions/runs/42562783700">Open the CI run on GitHub</a></p>
+  <img src="assets/ci-evals-pass.png" alt="CI eval summary: answered 15 of 15, recall 1.00, precision 1.00, every check passing" loading="lazy">
+</section>
+
+<section id="s-broke" data-title="7. What broke" role="tabpanel" hidden>
+  <h2>7. What broke on the way to green</h2>
+  <p>Ten things broke. The gate failed 3 times locally and 4 times in CI, and only 2 of those 7 failures were the model's fault. <span class="pill bad">model</span> <span class="pill" style="color:var(--accent)">CI</span> <span class="pill muted">not the model</span></p>
+  <ol class="tl" id="timeline"></ol>
+  <div class="card">
+    <h3 style="margin-top:0">The upload hang, measured</h3>
+    <p><code>upload_file_from_workspace_to_foundry_project</code> over 13 hours: <b>41 of 155</b> calls took over a minute. Median <b>2 s</b>, 90th percentile <b>617 s</b>. Each slow upload sits behind a <code>permission</code> span of the same length; during the preview the service manages harness tool approvals, so there's nothing to configure.</p>
+    <svg viewBox="0 0 600 120" width="100%" style="max-width:640px" role="img" aria-labelledby="hangT">
+      <title id="hangT">155 upload calls: 114 under a minute, 41 over a minute. Median 2 seconds, 90th percentile 617 seconds.</title>
+      <rect x="0" y="10" width="441" height="34" fill="var(--ok)" opacity=".75"/><rect x="441" y="10" width="159" height="34" fill="var(--bad)" opacity=".8"/>
+      <text x="8" y="32" style="fill:var(--bg)">114 under 60 s</text><text x="449" y="32" style="fill:var(--bg)">41 over 60 s</text>
+      <text x="0" y="74">p50</text><rect x="40" y="62" width="2" height="16" fill="var(--fg)"/><text x="50" y="74">2 s</text>
+      <text x="0" y="104">p90</text><rect x="40" y="92" width="560" height="16" fill="var(--warn)" opacity=".6"/><text x="50" y="104">617 s (over 10 minutes)</text>
+    </svg>
+  </div>
+</section>
+
+<section id="s-cost" data-title="8. Cost & limits" role="tabpanel" hidden>
+  <h2>8. Cost and what's still untested</h2>
+  <div class="grid">
+    <div class="card"><div class="stat">Free</div><p>Harness runtime until 2026-12-01. Model tokens are billed.</p></div>
+    <div class="card"><div class="stat">≈ USD 0.12 / h</div><p>After that, while the sandbox is alive: USD 0.0994 per vCPU-hour + 0.0118 per GiB-hour. Measured sandbox: 1 vCPU, about 2.2 GiB RAM, 16 GB disk.</p></div>
+    <div class="card"><div class="stat">Per token</div><p>Raising the model to 300K TPM cost nothing extra; you pay per token.</p></div>
+  </div>
+  <div class="card">
+    <h3 style="margin-top:0">Sandbox cost calculator</h3>
+    <div class="row"><div><label for="hrs">Hours alive per month</label><input id="hrs" type="number" min="0" value="10"></div><div><label for="gib">GiB RAM</label><input id="gib" type="number" min="0" step="0.1" value="2.2"></div><div><label for="vcpu">vCPU</label><input id="vcpu" type="number" min="0" value="1"></div></div>
+    <p id="costOut" class="stat" aria-live="polite"></p>
+    <p class="note">Runtime only, at the rates published for after 2026-12-01. Excludes tokens.</p>
+  </div>
+  <div class="card">
+    <h3 style="margin-top:0">Not tested yet</h3>
+    <ul><li>Private networking with the harness</li><li>A region-bound model deployment (this uses GlobalStandard)</li><li>The sandbox idle timeout</li></ul>
+    <p>If you need data residency, test those first.</p>
+  </div>
+</section>
+
+<div class="pager"><button id="prev">← Previous</button><button id="next">Next →</button></div>
+</main>
+<style>.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}</style>
+<script>
+const DATA = {"evals": {"passed": true, "recall": 1.0, "precision": 1.0, "tp": 26, "fp": 0, "fn": 0, "answered": 15, "total_cases": 15, "checks": {"answered >= 80% of cases (15/15)": true, "recall >= 0.9": true, "precision >= 0.8": true, "week_total within 1% on every answered case": true, "chart on every answered case": true, "egress to example.com blocked": true}, "egress": {"blocked": true, "http_code": "403", "output": "```text\n403 exit=0\n```", "seconds": 11.4}, "cases": [{"case": "case-01", "expected": 0, "seconds": 72.5, "json_ok": true, "tp": 0, "fp": 0, "fn": 0, "types_ok": true, "week_total": 4826.6, "week_total_expected": 4826.6, "total_ok": true, "chart_ok": true, "missed": [], "extra": []}, {"case": "case-02", "expected": 0, "seconds": 79.0, "json_ok": true, "tp": 0, "fp": 0, "fn": 0, "types_ok": true, "week_total": 4718.84, "week_total_expected": 4718.84, "total_ok": true, "chart_ok": true, "missed": [], "extra": []}, {"case": "case-03", "expected": 1, "seconds": 60.2, "json_ok": true, "tp": 1, "fp": 0, "fn": 0, "types_ok": true, "week_total": 5001.53, "week_total_expected": 5001.53, "total_ok": true, "chart_ok": true, "missed": [], "extra": []}, {"case": "case-04", "expected": 1, "seconds": 69.2, "json_ok": true, "tp": 1, "fp": 0, "fn": 0, "types_ok": true, "week_total": 5001.67, "week_total_expected": 5001.67, "total_ok": true, "chart_ok": true, "missed": [], "extra": []}, {"case": "case-05", "expected": 1, "seconds": 58.1, "json_ok": true, "tp": 1, "fp": 0, "fn": 0, "types_ok": true, "week_total": 5196.87, "week_total_expected": 5196.87, "total_ok": true, "chart_ok": true, "missed": [], "extra": []}, {"case": "case-06", "expected": 1, "seconds": 76.6, "json_ok": true, "tp": 1, "fp": 0, "fn": 0, "types_ok": true, "week_total": 5125.68, "week_total_expected": 5125.68, "total_ok": true, "chart_ok": true, "missed": [], "extra": []}, {"case": "case-07", "expected": 2, "seconds": 109.0, "json_ok": true, "tp": 2, "fp": 0, "fn": 0, "types_ok": true, "week_total": 5458.77, "week_total_expected": 5458.77, "total_ok": true, "chart_ok": true, "missed": [], "extra": []}, {"case": "case-08", "expected": 2, "seconds": 63.5, "json_ok": true, "tp": 2, "fp": 0, "fn": 0, "types_ok": true, "week_total": 6671.06, "week_total_expected": 6671.06, "total_ok": true, "chart_ok": true, "missed": [], "extra": []}, {"case": "case-09", "expected": 2, "seconds": 56.7, "json_ok": true, "tp": 2, "fp": 0, "fn": 0, "types_ok": true, "week_total": 6138.61, "week_total_expected": 6138.61, "total_ok": true, "chart_ok": true, "missed": [], "extra": []}, {"case": "case-10", "expected": 2, "seconds": 100.7, "json_ok": true, "tp": 2, "fp": 0, "fn": 0, "types_ok": true, "week_total": 5944.42, "week_total_expected": 5944.42, "total_ok": true, "chart_ok": true, "missed": [], "extra": []}, {"case": "case-11", "expected": 2, "seconds": 97.9, "json_ok": true, "tp": 2, "fp": 0, "fn": 0, "types_ok": true, "week_total": 6123.6, "week_total_expected": 6123.6, "total_ok": true, "chart_ok": true, "missed": [], "extra": []}, {"case": "case-12", "expected": 3, "seconds": 56.4, "json_ok": true, "tp": 3, "fp": 0, "fn": 0, "types_ok": true, "week_total": 7594.9, "week_total_expected": 7594.9, "total_ok": true, "chart_ok": true, "missed": [], "extra": []}, {"case": "case-13", "expected": 3, "seconds": 76.9, "json_ok": true, "tp": 3, "fp": 0, "fn": 0, "types_ok": true, "week_total": 6562.31, "week_total_expected": 6562.31, "total_ok": true, "chart_ok": true, "missed": [], "extra": []}, {"case": "case-14", "expected": 3, "seconds": 66.9, "json_ok": true, "tp": 3, "fp": 0, "fn": 0, "types_ok": true, "week_total": 5939.86, "week_total_expected": 5939.86, "total_ok": true, "chart_ok": true, "missed": [], "extra": []}, {"case": "case-15", "expected": 3, "seconds": 75.2, "json_ok": true, "tp": 3, "fp": 0, "fn": 0, "types_ok": true, "week_total": 5872.71, "week_total_expected": 5872.71, "total_ok": true, "chart_ok": true, "missed": [], "extra": []}], "late_message_refetches": 0, "median_seconds": 72.5}, "yaml": "# yaml-language-server: $schema=https://raw.githubusercontent.com/Azure/azure-dev/main/schemas/v1.0/azure.yaml.json\n# Based on microsoft-foundry/foundry-samples csv-chart-analyst (MIT).\n\nrequiredVersions:\n  azd: '>=1.37.0'\n  extensions:\n    azure.ai.agents: '>=1.0.0'\n    azure.ai.projects: '>=1.0.0-beta.14'\n\nname: copilot-harness-finops\n\nhooks:\n  # Creates App Insights + project connection (tracing) and the egress RAI policy,\n  # then stores RAI_POLICY_ID so the agent deploy below picks it up.\n  postprovision:\n    posix:\n      shell: sh\n      run: ./scripts/postprovision.sh\n      interactive: false\n      continueOnError: false\n  # The agent identity only exists after deploy, so its role is assigned here.\n  postdeploy:\n    posix:\n      shell: sh\n      run: ./scripts/assign-agent-role.sh\n      interactive: false\n      continueOnError: false\n\nservices:\n  ai-project:\n    host: azure.ai.project\n    deployments:\n      - name: gpt-5.4-mini\n        model:\n          format: OpenAI\n          name: gpt-5.4-mini\n          version: '2026-03-17'\n        sku:\n          name: GlobalStandard\n          capacity: 300\n\n  finops-analyst:\n    host: azure.ai.agent\n    project: .\n    kind: prompt\n    name: finops-analyst\n    displayName: FinOps Analyst\n    description: Reviews a weekly Azure cost export, flags anomalies and returns a summary, JSON and a chart.\n    model: gpt-5.4-mini\n    harness:\n      type: microsoft_copilot_preview\n    policies:\n      - type: rai_policy\n        raiPolicyName: ${RAI_POLICY_ID}\n    instructions: |\n      You are a FinOps analyst for a platform team. The attached CSV is an Azure Cost Management\n      export with columns Date, SubscriptionName, ResourceGroup, ResourceName, ServiceName,\n      MeterName, CostInBillingCurrency, BillingCurrency. Each row is one resource's cost for one day.\n\n      Always compute with Python in the shell. Never estimate numbers by reading the file.\n\n      Definitions:\n      - The analysis week is the last 7 calendar days in the file. Everything before it is the baseline.\n      - A resource's baseline median is the median of its daily cost over all baseline days,\n        counting days with no row as 0.\n      - Flag a resource as `spike` or `step_change` on the FIRST analysis-week day where its cost is\n        more than 2x its baseline median AND at least USD 25 above it. Use `step_change` when the cost\n        stays above that threshold on every remaining day of the week, otherwise `spike`.\n      - Flag a resource as `new_resource` when it has no cost in the baseline and its analysis-week\n        total exceeds USD 100. Use its first day with cost as the date.\n      - Report at most one anomaly per resource. Do not flag anything else.\n\n      Work in this order:\n      1. Write ONE Python script that applies these rules to every resource and writes the result\n         JSON (shape below) to result.json with json.dump. Run it and use its output verbatim. Do\n         not re-derive anomalies by hand.\n      2. Generate a PNG chart of daily total cost for all 28 days with anomaly days marked, a\n         descriptive title and labeled axes. Save it in the runtime-provided output directory and\n         upload it as a Foundry File.\n      3. Only after the upload, write your final message. Your final message must contain all of:\n         - A short summary for an engineering manager: week total, number of anomalies, the most\n           expensive one and a suggested next step for each anomaly.\n         - Exactly one fenced ```json block with this shape and nothing else inside it:\n           {\"analysis_start\": \"YYYY-MM-DD\", \"analysis_end\": \"YYYY-MM-DD\", \"week_total\": 0.00,\n            \"currency\": \"USD\", \"anomalies\": [{\"resource\": \"\", \"resource_group\": \"\", \"service\": \"\",\n            \"date\": \"YYYY-MM-DD\", \"type\": \"spike|step_change|new_resource\", \"cost\": 0.00,\n            \"baseline_median\": 0.00, \"next_step\": \"\"}]}\n           week_total is the sum of all costs in the analysis week, rounded to 2 decimals.\n         - The chart filename as `File:` and its Foundry file ID as `Download ID:`.\n      Just before the final message, run `python -c \"import json; print(json.dumps(json.load(open('result.json'))))\"`\n      and paste that one line, unchanged, inside the ```json block. Do not retype or reformat it.\n      Never end your turn with a tool call. The final message is the deliverable.\n\n      Prefer the Python standard library. If you need a charting package, install the minimum with\n      pip. Do not modify the source CSV. Never invent resources, dates or values.\n    tools:\n      - type: microsoft_copilot_toolset_preview\n        defaultConfig:\n          enabled: false\n        configs:\n          - name: filesystem_read\n            enabled: true\n          - name: filesystem_write\n            enabled: true\n          - name: shell\n            enabled: true\n    uses:\n      - ai-project\n\ninfra:\n  provider: microsoft.foundry\n  path: infra", "egress": [{"decision": "Allow", "method": "POST", "host": "canadacentral-1.in.applicationinsights.azure.com", "count": 16869}, {"decision": "Deny", "method": "POST", "host": "canadacentral-1.in.applicationinsights.azure.com", "count": 9620}, {"decision": "Allow", "method": "GET", "host": "files.pythonhosted.org", "count": 3984}, {"decision": "Allow", "method": "POST", "host": "canadacentral.livediagnostics.monitor.azure.com", "count": 2672}, {"decision": "Allow", "method": "POST", "host": "<account>.services.ai.azure.com", "count": 2664}, {"decision": "Allow", "method": "GET", "host": "pypi.org", "count": 2176}, {"decision": "Deny", "method": "POST", "host": "agent365.svc.cloud.microsoft", "count": 1418}, {"decision": "Allow", "method": "GET", "host": "<account>.services.ai.azure.com", "count": 636}, {"decision": "Deny", "method": "POST", "host": "canadacentral.livediagnostics.monitor.azure.com", "count": 500}, {"decision": "Deny", "method": "POST", "host": "westus-0.in.applicationinsights.azure.com", "count": 422}, {"decision": "Deny", "method": "GET", "host": "settings.sdk.monitor.azure.com", "count": 211}, {"decision": "Deny", "method": "GET", "host": "example.com", "count": 13}, {"decision": "Deny", "method": "GET", "host": "management.azure.com", "count": 1}], "answer": {"progress": "I\u2019ll parse the export, implement the anomaly rules in one Python script, then generate the JSON and chart from that script.\nI\u2019ve identified the anomaly candidates and I\u2019m packaging the logic into a single script that emits both `result.json` and the chart.\n`matplotlib` isn\u2019t installed here, so I\u2019m adding the minimal plotting dependency and rerunning the script.\nThe script has produced the analysis output; I\u2019m checking the generated files and then I\u2019ll upload the chart artifact.", "summary": "Week total was **$6,671.06** across the analysis window, with **2 anomalies**. The largest is **vmss-aks-nodes / Virtual Machines** on **2026-10-31** at **$888.83**. Next steps: for **sql-web-prod**, review the 10/27 step change and confirm whether the higher SQL spend is expected; for **vmss-aks-nodes**, investigate the 10/31 spike for deployment, scale-out, or transient workload activity.", "json": "{\"analysis_start\": \"2026-10-26\", \"analysis_end\": \"2026-11-01\", \"week_total\": 6671.06, \"currency\": \"USD\", \"anomalies\": [{\"resource\": \"sql-web-prod\", \"resource_group\": \"rg-web-prod\", \"service\": \"SQL Database\", \"date\": \"2026-10-27\", \"type\": \"step_change\", \"cost\": 292.69, \"baseline_median\": 86.88, \"next_step\": \"Investigate the change on the first anomaly day, then check whether this was an intended capacity or workload shift.\"}, {\"resource\": \"vmss-aks-nodes\", \"resource_group\": \"rg-platform\", \"service\": \"Virtual Machines\", \"date\": \"2026-10-31\", \"type\": \"spike\", \"cost\": 888.83, \"baseline_median\": 152.87, \"next_step\": \"Inspect the spike on the anomaly day, correlate it with deployments or workload changes, and confirm whether it is transient.\"}]}", "files": "File: `daily_total_cost_anomalies.png` \u00b7 Download ID: `assistant-<id>`"}};
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+// tabs
+const secs = [...document.querySelectorAll('main section')];
+const tabs = $('#tabs');
+secs.forEach((s, i) => {
+  const b = document.createElement('button');
+  b.role = 'tab'; b.id = 't-' + s.id; b.textContent = s.dataset.title;
+  b.setAttribute('aria-controls', s.id); s.setAttribute('aria-labelledby', b.id);
+  b.onclick = () => show(i);
+  tabs.appendChild(b);
+});
+let cur = 0;
+function show(i) {
+  cur = Math.max(0, Math.min(secs.length - 1, i));
+  secs.forEach((s, j) => s.hidden = j !== cur);
+  [...tabs.children].forEach((b, j) => { b.setAttribute('aria-selected', j === cur); b.tabIndex = j === cur ? 0 : -1; });
+  const tb = tabs.children[cur]; tabs.scrollLeft = tb.offsetLeft - tabs.clientWidth / 2 + tb.offsetWidth / 2;
+  $('#prev').disabled = cur === 0; $('#next').disabled = cur === secs.length - 1;
+  history.replaceState(null, '', '#' + secs[cur].id.slice(2));
+}
+tabs.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight') { show(cur + 1); tabs.children[cur].focus(); }
+  if (e.key === 'ArrowLeft') { show(cur - 1); tabs.children[cur].focus(); }
+});
+$('#prev').onclick = () => { show(cur - 1); scrollTo(0, 0); };
+$('#next').onclick = () => { show(cur + 1); scrollTo(0, 0); };
+show(Math.max(0, secs.findIndex(s => '#' + s.id.slice(2) === location.hash)));
+
+// headline + checks
+const ev = DATA.evals;
+$('#headline').innerHTML = [
+  ['Answered', `${ev.answered}/${ev.total_cases}`],
+  ['Recall', ev.recall.toFixed(2)], ['Precision', ev.precision.toFixed(2)],
+  ['Anomalies found', `${ev.tp} of ${ev.tp + ev.fn}, ${ev.fp} false positives`],
+  ['Median per case', ev.median_seconds + ' s'],
+  ['Egress', `HTTP ${ev.egress.http_code} from example.com`]
+].map(([k, v]) => `<div><div class="muted">${k}</div><div class="stat">${esc(v)}</div></div>`).join('');
+$('#checks').innerHTML = Object.entries(ev.checks).map(([k, v]) =>
+  `<div class="card"><span class="${v ? 'ok' : 'bad'}" aria-hidden="true">${v ? '✓' : '✗'}</span> ${esc(k)} <span class="sr">${v ? 'passed' : 'failed'}</span></div>`).join('');
+
+// architecture
+const ARCH = {
+  azd: ['azd up', 'One command. The <code>microsoft.foundry</code> provider creates the project and model from <code>azure.yaml</code>. <code>postprovision</code> adds App Insights and the egress policy; <code>postdeploy</code> assigns the agent role. About five and a half minutes end to end.'],
+  project: ['Foundry project', 'Foundry Agent Service, public preview. Holds the model deployment, the agent, the App Insights connection and the RAI policy.'],
+  model: ['Model deployment', '<code>gpt-5.4-mini</code>, GlobalStandard. Capacity raised from 50K to 300K tokens per minute after the first run hit <code>rate_limit_exceeded</code>.'],
+  agent: ['finops-analyst', 'A prompt agent with <code>harness.type: microsoft_copilot_preview</code>. Only the filesystem read, filesystem write and shell tools are enabled. Its own Entra identity gets Foundry User on the project.'],
+  sandbox: ['Sandbox', 'Measured from inside the agent shell: 1 vCPU, about 2.2 GiB RAM, 16 GB disk, Debian 12, root. The agent writes and runs one Python script, installs matplotlib from PyPI, and uploads the chart.'],
+  egress: ['Egress policy', 'RAI policy <code>finops-egress</code>, mode Enforced, default Deny, four FQDN allow rules. See step 4.'],
+  appi: ['App Insights', 'Connected to the project for server-side tracing. Shell commands are <code>execute_tool bash</code> spans; every egress decision is its own span.'],
+  gha: ['GitHub Actions', 'The Agent evals workflow runs the 15 cases with a 45-minute limit and unbuffered, per-case logs. It signs in with OIDC, so there are no secrets in the repo.'],
+  mi: ['Managed identity', 'User-assigned identity with federated credentials for <code>main</code> and pull requests. The tenant blocks app registrations, and this needs only RBAC on the resource group. The OIDC subject includes owner and repo IDs: <code>repo:owner@&lt;id&gt;/name@&lt;id&gt;:ref:refs/heads/main</code>. Role: Foundry User, so CI can run evals but not deploy.'],
+  internet: ['The rest of the internet', 'Denied by default. From the agent shell, <code>curl example.com</code> returned 403.']
+};
+document.querySelectorAll('g.node').forEach(g => {
+  const act = () => {
+    document.querySelectorAll('g.node rect').forEach(r => r.classList.remove('hot'));
+    g.querySelector('rect').classList.add('hot');
+    const [t, d] = ARCH[g.dataset.k];
+    $('#archInfo').innerHTML = `<h3 style="margin-top:0">${t}</h3><p>${d}</p>`;
+  };
+  g.onclick = act; g.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); act(); } };
+});
+document.querySelector('g.node[data-k="agent"]').onclick();
+
+// yaml
+const NOTES = [
+  [/^name: copilot-harness-finops/, 'Project name', 'The azd project. Everything below deploys with one <code>azd up</code>.'],
+  [/^  postprovision:/, 'postprovision hook', 'Runs <code>scripts/postprovision.sh</code>: creates Log Analytics + App Insights, connects it to the project, writes the egress RAI policy, and stores <code>RAI_POLICY_ID</code> so the agent deploy attaches it.'],
+  [/^  postdeploy:/, 'postdeploy hook', 'Runs <code>scripts/assign-agent-role.sh</code>. The agent identity only exists after deploy, so Foundry User is assigned here.'],
+  [/^      - name: gpt-5\.4-mini/, 'Model', 'One model deployment in the project.'],
+  [/^          capacity: 300/, 'Capacity', '300K tokens per minute. The original 50K made 14 of 15 cases fail with <code>rate_limit_exceeded</code>. <code>azd deploy</code> didn\'t apply the change to the existing deployment, so it was set with <code>az cognitiveservices account deployment create --sku-capacity 300</code>.'],
+  [/^      type: microsoft_copilot_preview/, 'The harness', 'This line puts the agent on the Copilot harness: the agent engine behind GitHub Copilot, with a sandbox and built-in tools.'],
+  [/^      - type: rai_policy/, 'Policies', 'Attaches the RAI policy that carries the egress rules. Its ID comes from the postprovision hook.'],
+  [/^      - Flag a resource as `spike`/, 'The rule', 'A precise anomaly rule makes the task testable: there is ground truth for every case.'],
+  [/^      1\. Write ONE Python script/, 'Code, not the model\'s head', 'Added after one run reported "no anomalies" next to an obvious 4.6× spike. The script applies the rule; the model copies its output.'],
+  [/^      3\. Only after the upload/, 'Upload first, answer last', 'When the upload was the last step, the final answer could be replaced by "The agent generated the following files, which are attached."'],
+  [/^      Just before the final message, run/, 'Paste, don\'t retype', 'Added after a correct answer failed because the model retyped the JSON and dropped the closing brace.'],
+  [/^      Never end your turn with a tool call/, 'Don\'t end on a tool call', 'Same failure as above: the final message is the deliverable.'],
+  [/^      - type: microsoft_copilot_toolset_preview/, 'Tools', 'Everything off by default...'],
+  [/^          enabled: false/, 'Default off', '...then only three tools on. Web and subagents stay off.'],
+  [/^          - name: shell/, 'Shell', 'The agent runs Python here. Its network traffic goes through the egress policy.'],
+  [/^  provider: microsoft\.foundry/, 'Infra provider', 'The <code>microsoft.foundry</code> provider creates the project and model; no Bicep to maintain for the agent.']
+];
+const yc = $('#ycode');
+DATA.yaml.split('\n').forEach((line, i) => {
+  const s = document.createElement('span');
+  s.className = 'yl';
+  s.innerHTML = `<span class="n">${i + 1}</span>${esc(line) || ' '}`;
+  const note = NOTES.find(n => n[0].test(line));
+  if (note) {
+    s.classList.add('ann'); s.tabIndex = 0; s.setAttribute('role', 'button');
+    s.setAttribute('aria-label', `Line ${i + 1}: ${note[1]}`);
+    const act = () => { yc.querySelectorAll('.sel').forEach(x => x.classList.remove('sel')); s.classList.add('sel');
+      $('#yexplain').innerHTML = `<b>Line ${i + 1}: ${note[1]}</b><p>${note[2]}</p>`; };
+    s.onclick = act; s.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); act(); } };
+  }
+  yc.appendChild(s);
+});
+[...yc.querySelectorAll('.ann')].find(x => x.textContent.includes('microsoft_copilot_preview')).click();
+
+// egress tester
+const ALLOW = {'pypi.org':'allow-pypi','files.pythonhosted.org':'allow-pypi-files',
+  'canadacentral-1.in.applicationinsights.azure.com':'allow-appinsights-ingest',
+  'canadacentral.livediagnostics.monitor.azure.com':'allow-appinsights-live'};
+const OBS = DATA.egress;
+function checkHost() {
+  let h = $('#host').value.trim().toLowerCase().replace(/^https?:\/\//, '').replace(/[\/:].*$/, '');
+  if (!h) return;
+  let r;
+  if (ALLOW[h]) r = `<p class="ok verdict">Allow: matches rule <code>${ALLOW[h]}</code>.</p>`;
+  else if (/^[a-z0-9-]+\.services\.ai\.azure\.com$/.test(h) || h === '<account>.services.ai.azure.com')
+    r = `<p class="warn verdict">Allowed without a rule: Foundry platform connectivity, if this is the project's own account.</p>`;
+  else r = `<p class="bad verdict">Deny: no rule matches. The agent gets HTTP 403.</p>`;
+  const seen = OBS.filter(o => o.host === h);
+  if (seen.length) r += '<p>Observed in App Insights: ' + seen.map(o => `${o.decision} ${o.method} × ${o.count.toLocaleString()}`).join(', ') + '.</p>';
+  $('#hostOut').innerHTML = r;
+}
+$('#hostGo').onclick = checkHost; $('#host').onkeydown = e => { if (e.key === 'Enter') checkHost(); };
+['example.com','pypi.org','files.pythonhosted.org','agent365.svc.cloud.microsoft','management.azure.com','<account>.services.ai.azure.com'].forEach(h => {
+  const b = document.createElement('button'); b.className = 'btn'; b.textContent = h; b.style.flex = '0 0 auto';
+  b.onclick = () => { $('#host').value = h; checkHost(); }; $('#hostPresets').appendChild(b);
+});
+checkHost();
+const maxC = Math.max(...OBS.map(o => o.count));
+function egRender() {
+  const f = $('#egFilter').value;
+  $('#egTable tbody').innerHTML = OBS.filter(o => f === 'all' || o.decision === f).map(o =>
+    `<tr><td class="${o.decision === 'Allow' ? 'ok' : 'bad'}">${o.decision}</td><td>${o.method}</td><td><code>${esc(o.host)}</code></td><td class="num">${o.count.toLocaleString()}</td><td><div class="bar" style="width:${(o.count / maxC * 100).toFixed(1)}%;background:var(--${o.decision === 'Allow' ? 'ok' : 'bad'})"></div></td></tr>`).join('');
+}
+$('#egFilter').onchange = egRender; egRender();
+
+// anomaly rule
+const DN = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+const dflt = [80, 292.69, 290, 295, 300, 288, 291];
+$('#days').innerHTML = DN.map((d, i) => `<label style="font-weight:400">${d}<input type="number" min="0" step="0.01" value="${dflt[i]}" data-i="${i}" aria-label="${d} cost"></label>`).join('');
+function rule() {
+  const m = +$('#med').value || 0, isNew = $('#isNew').checked;
+  const c = [...document.querySelectorAll('#days input')].map(x => +x.value || 0);
+  const total = c.reduce((a, b) => a + b, 0);
+  $('#med').disabled = isNew;
+  let out;
+  if (isNew) {
+    const first = c.findIndex(x => x > 0);
+    out = total > 100 ? `<p class="bad verdict">new_resource on ${DN[first]}: week total USD ${total.toFixed(2)} &gt; 100</p>`
+                      : `<p class="ok verdict">Not flagged: week total USD ${total.toFixed(2)} ≤ 100</p>`;
+  } else {
+    const hit = x => x > 2 * m && x >= m + 25;
+    const d = c.findIndex(hit);
+    const thr = `threshold: more than USD ${(2 * m).toFixed(2)} and at least USD ${(m + 25).toFixed(2)}`;
+    if (d < 0) out = `<p class="ok verdict">Not flagged (${thr}).</p>`;
+    else {
+      const type = c.slice(d).every(hit) ? 'step_change' : 'spike';
+      out = `<p class="bad verdict">${type} on ${DN[d]}: USD ${c[d].toFixed(2)} vs median ${m.toFixed(2)} (${(c[d] / (m || 1)).toFixed(1)}×)</p><p class="note">${thr}. ${type === 'step_change' ? 'Stays above on every remaining day.' : 'Drops back below on a later day.'}</p>`;
+    }
+  }
+  $('#ruleOut').innerHTML = out;
+}
+document.querySelectorAll('#s-rule input').forEach(x => x.oninput = rule); rule();
+
+// real answer
+const A = DATA.answer;
+$('#answer').innerHTML = `<p class="note">Progress messages from the agent</p><pre>${esc(A.progress)}</pre><p class="note">Final answer</p><p>${esc(A.summary).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>')}</p><pre>${esc(JSON.stringify(JSON.parse(A.json), null, 2))}</pre><p class="note">${esc(A.files)}</p>`;
+
+// evals table
+let sk = 'case', sd = 1;
+const maxS = Math.max(...ev.cases.map(c => c.seconds));
+function evRender() {
+  const f = $('#caseFilter').value;
+  const rows = ev.cases.filter(c => f === 'all' || String(c.expected) === f).slice().sort((a, b) => (a[sk] > b[sk] ? 1 : a[sk] < b[sk] ? -1 : 0) * sd);
+  $('#caseTable tbody').innerHTML = rows.map(c => `<tr><td>${c.case}</td><td class="num">${c.expected}</td><td class="num">${c.tp}</td><td class="num">${c.fp}</td><td class="num">${c.fn}</td><td class="num">${c.week_total.toFixed(2)}</td><td class="${c.total_ok ? 'ok' : 'bad'}">${c.total_ok ? '✓' : '✗'}</td><td class="${c.chart_ok ? 'ok' : 'bad'}">${c.chart_ok ? '✓' : '✗'}</td><td class="num">${c.seconds.toFixed(1)}</td><td><div class="bar" style="width:${(c.seconds / maxS * 100).toFixed(0)}%"></div></td></tr>`).join('');
+  document.querySelectorAll('#caseTable th').forEach(th => { const b = th.querySelector('button'); th.setAttribute('aria-sort', b && b.dataset.s === sk ? (sd > 0 ? 'ascending' : 'descending') : 'none'); });
+}
+document.querySelectorAll('#caseTable th button').forEach(b => b.onclick = () => { sd = sk === b.dataset.s ? -sd : 1; sk = b.dataset.s; evRender(); });
+$('#caseFilter').onchange = evRender; evRender();
+
+// timeline
+const TL = [
+  ['local','Rate limits, not reasoning','The first full run failed 14 of 15 cases with <code>rate_limit_exceeded</code>. 50K TPM; raised to 300K at no extra cost.'],
+  ['local','A response that never finished','One case sat at <code>in_progress</code> for over 15 minutes. The same case in a new conversation took under a minute. Cause found later: the upload hang.'],
+  ['local','"Completed" before the answer existed','Responses came back <code>completed</code> with only progress messages. The runner re-reads for up to about 90 s when the JSON block is missing.'],
+  ['local','The upload swallowed the answer','With the upload as the last step, the final message became "The agent generated the following files, which are attached." Fix: upload first, answer last.'],
+  ['local','My own client','Three parallel workers each shelled out to <code>az</code> for a token and <code>az</code> hung. One cached token across threads, with retries.'],
+  ['model','One real miss','The agent saw an obvious 4.6× spike and reported no anomalies. Fix: one Python script applies the rule; copy its output verbatim.'],
+  ['ci','CI login, twice','Tenant blocks app registrations → user-assigned managed identity with federated credentials. Then <code>AADSTS700213</code>: the OIDC subject now includes owner and repo IDs.'],
+  ['ci','A silent timeout','Hit the 30-minute job limit with no output: Python buffered it, and one stuck case could outlast the job. Now per-case logs, unbuffered, 45-minute limit.'],
+  ['ci','The upload tool hangs','41 of 155 uploads over a minute. Hangs were scored as misses and dropped recall to 0.88 though every answer was right. Gate split: quality on answered cases, plus answered ≥ 80% with 3 tries of 180 s.'],
+  ['model','A dropped brace','Right answer, unparseable JSON: the model retyped it and lost the closing brace. Now the script writes <code>result.json</code> and the agent pastes a one-line <code>json.dumps</code>.'],
+];
+$('#timeline').innerHTML = TL.map(([k, t, d], i) => `<li class="${k === 'model' ? 'model' : k === 'ci' ? 'ci' : ''}"><details${k === 'model' ? ' open' : ''}><summary>${i + 1}. ${t} <span class="pill ${k === 'model' ? 'bad' : 'muted'}" ${k === 'ci' ? 'style="color:var(--accent)"' : ''}>${k === 'model' ? 'model' : k === 'ci' ? 'CI' : 'not the model'}</span></summary><p>${d}</p></details></li>`).join('') +
+  `<li class="ci"><b class="ok">✓ CI green:</b> 15/15 answered (2 after a retry), 26/26 anomalies, 0 false positives, egress blocked.</li>`;
+
+// cost
+function cost() { const v = (+$('#vcpu').value || 0) * 0.0994 + (+$('#gib').value || 0) * 0.0118; const h = +$('#hrs').value || 0;
+  $('#costOut').textContent = `USD ${v.toFixed(4)} / hour → USD ${(v * h).toFixed(2)} / month`; }
+document.querySelectorAll('#s-cost input').forEach(x => x.oninput = cost); cost();
+</script>
+</body>
+</html>
