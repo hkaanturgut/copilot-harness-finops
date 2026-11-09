@@ -9,7 +9,7 @@ The point isn't the agent. It's what an enterprise platform team would ask for b
 | Infrastructure as code | One `azd up`. The `microsoft.foundry` provider creates the project and model; hooks cover the rest. |
 | Least-privilege tools | Only `filesystem_read`, `filesystem_write` and `shell`. Web and subagents are off. |
 | Network egress | RAI policy, **default Deny**, Enforced. Allow-list: PyPI and this project's App Insights. Everything else gets HTTP 403. |
-| Identity | Entra only. The agent's own identity gets **Foundry User** after deploy (it doesn't exist before). CI uses OIDC with Foundry User only: it can run evals, not deploy. |
+| Identity | Entra only. The agent's own identity gets **Foundry User** after deploy (it doesn't exist before). CI uses OIDC (user-assigned managed identity) with Foundry User only: it can run evals, not deploy. |
 | Observability | App Insights connected to the project: server-side traces, including one span per egress decision. |
 | Quality gate | 15 synthetic cost exports with seeded anomalies. CI fails on recall < 0.90, precision < 0.80, week total off by > 1%, no chart, or egress not blocked. |
 | Cost | Budget alert on the resource group. Harness runtime is free until 2026-12-01, then USD 0.0994/vCPU-hour + 0.0118/GiB-hour plus model tokens. |
@@ -60,7 +60,7 @@ python evals/generate_data.py   # optional: regenerate the 15 cases + sample
 python evals/run_evals.py       # writes evals/results/latest.md
 ```
 
-CI setup (one time, needs rights to create an app registration): `./scripts/setup-github-oidc.sh`.
+CI setup (one time, creates a user-assigned managed identity with a GitHub federated credential; no app-registration rights needed): `./scripts/setup-github-oidc.sh`.
 
 Tear down: `azd down --purge --force`.
 
